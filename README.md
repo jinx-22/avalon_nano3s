@@ -84,22 +84,32 @@ Für die Änderung von Pool-Daten aus Homeassistant heraus muss das Login-Passwo
 4. IP-Adresse des Miners und ggf. Passwort des Miners eingeben -> OK
 
 ---
+## 🧡 Support & Unterstützung
 
-### Support, Spenden und Unterstützung! 
-
-Wenn dir meine Arbeit gefällt und sie für dich einen Nutzen und Wert hat, freue ich mich über eine kleine Unterstützung:
-
-## <span style="color: orange; font-size: 1.4em;">₿</span>  Bitcoin: 
-``` 
-bc1qkz7mtp23cmshxnru96lzgeayu0urlysvqk5vry
-```
-<img width="160" height="162" alt="Donations_240px" src="https://github.com/user-attachments/assets/196f68e4-b0e8-4f27-bded-8c4fe13b9d45" />
-
-## ⚡Lightning : 
-```
-toughnote102@walletofsatoshi.com
-```
+Wenn dir diese Integration gefällt und sie einen echten Mehrwert für dein Home Assistant Setup bietet,  
+freue ich mich über eine kleine Unterstützung — jede Spende hilft, das Projekt weiterzuentwickeln 🚀
+<br>
+<p align="center">
+⚡ <b>Lightning Adresse:</b>
+<br> <br>
+<code>toughnote102@walletofsatoshi.com</code>
+<br>
 <img width="160" height="180" alt="Self_Wallet of Satoshi" src="https://github.com/user-attachments/assets/d1f63d0d-33ef-4b32-ad14-23f5b6dbd131" />
+<br> <br>
+oder: 
+<br>
+<br>
+<div align="center">
+<img width="25" height="25" alt="Bitcoin_25px" src="https://github.com/user-attachments/assets/f74cad36-8c05-4a33-89cd-b998075af33b" />
+ Bitcoin:
+   <br> <br>
+  <code>bc1qkz7mtp23cmshxnru96lzgeayu0urlysvqk5vry
+  </code>
+    <br>
+
+<img width="160" height="162" alt="Donations_240px" src="https://github.com/user-attachments/assets/196f68e4-b0e8-4f27-bded-8c4fe13b9d45" />
+<br>   <br>
+</div>
 
 **Vielen Dank** ,und gebt mir einen kostenlosen [![GitHub stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s?style=social)](https://github.com/jinx-22/avalon_nano3s/stargazers), dann finden andere auch den Weg hierher - Danke!
 
