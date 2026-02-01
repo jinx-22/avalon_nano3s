@@ -1,5 +1,9 @@
-[Avalon Nano 3S](https://raw.githubusercontent.com/jinx-22/avalon_nano3s/logo.png)
+
+<img width="100" height="100" alt="logo" src="https://github.com/user-attachments/assets/a0fa0a03-ac01-46dd-a215-0b93cd77d4fc" /> 
+
 # "Avalon Nano 3S" Integration für Home Assistant! 
+
+
 
 
 ---
@@ -56,18 +60,16 @@ Wenn dir meine Arbeit gefällt und dir diese Integration weiterhilft, freue ich 
 ## <span style="color: orange; font-size: 1.4em;">₿</span>  Bitcoin: 
 ``` 
 bc1qkz7mtp23cmshxnru96lzgeayu0urlysvqk5vry
-
 ```
-
-
+<img width="240" height="247" alt="Donations_240px" src="https://github.com/user-attachments/assets/196f68e4-b0e8-4f27-bded-8c4fe13b9d45" />
 
 ## ⚡Lightning : 
 ```
 toughnote102@walletofsatoshi.com
-
 ```
+<img width="239" height="272" alt="Self_Wallet of Satoshi" src="https://github.com/user-attachments/assets/d1f63d0d-33ef-4b32-ad14-23f5b6dbd131" />
 
- ...und vielleicht gebt ihr mir einen [![GitHub stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s?style=social)](https://github.com/jinx-22/avalon_nano3s/stargazers), damit das Repro besser gefunden wird - Danke!
+ ...und vielleicht gebt ihr mir einen [![GitHub stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s?style=social)](https://github.com/jinx-22/avalon_nano3s/stargazers), damit das Repo besser gefunden wird - Danke!
 
 ----
 
