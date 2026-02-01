@@ -5,7 +5,7 @@
   "homeassistant": "2026.1.0",
   "logo": "logo.png",
   "render_readme": true,
-  "hacs": "integration",
+  "hacs": "1.0.0",
   "zip_release": true,
   "changelog": "https://github.com/jinx-22/avalon_nano3s/releases",
   "zip_url": "https://github.com/jinx-22/avalon_nano3s/archive/refs/tags/{version}.zip",
