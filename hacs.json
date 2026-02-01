@@ -1,0 +1,20 @@
+{
+  "name": "Avalon Nano 3S",
+  "content_in_root": false,
+  "domains": ["sensor", "button", "light", "select"],
+  "homeassistant": "2026.1.0",
+  "logo": "logo.png",
+  "render_readme": true,
+  "hacs": "integration",
+  "zip_release": true,
+  "changelog": "https://github.com/jinx-22/avalon_nano3s/releases",
+  "zip_url": "https://github.com/jinx-22/avalon_nano3s/archive/refs/tags/{version}.zip",
+  "filename": "avalon_nano3s",
+  "short_description": "Home Assistant Integration für Avalon Nano 3S Miner – Sensoren, LEDs, Buttons, Workmode & Pools.",
+  "author": "jinx-22",
+  "iot_class": "local_polling",
+  "version": "1.0.0",
+  "tags": ["miner", "avalon", "asic", "nano3s", "btc", "bitcoin"],
+  "keywords": ["Avalon", "Nano3S", "ASIC", "Miner", "Mining", "Bitcoin", "BTC"],
+  "documentation": "https://github.com/jinx-22/avalon_nano3s"
+}
