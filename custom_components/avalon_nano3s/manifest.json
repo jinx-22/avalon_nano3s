@@ -1,11 +1,11 @@
 {
   "domain": "avalon_nano3s",
   "name": "Avalon Nano 3S",
-  "version": "1.0.0",
-  "documentation": "https://github.com/jinx-22/avalon_nano3s",
-  "requirements": [],
-  "dependencies": [],
   "codeowners": ["@jinx-22"],
   "config_flow": true,
-  "iot_class": "local_polling"
+  "dependencies": [],
+  "documentation": "https://github.com/jinx-22/avalon_nano3s",
+  "iot_class": "local_polling",
+  "requirements": [],
+  "version": "1.0.0"
 }
