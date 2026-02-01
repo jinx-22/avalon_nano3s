@@ -47,32 +47,11 @@ Funktionen:
 
 **Hinweis zum ändern der Pool-Daten:**
 
-Für die Änderung von Pool-daten aus Homeassistant heraus muss das Login-Passwort bei Installation eingegeben werden, oder in den Optionen später nachgetragen werden werden, das Passwort wird nur für die Änderung der Pooldaten benötigt! Wollt ihr die Daten über HA nicht ändern, wird das Passwort nicht benötigt!
+Für die Änderung von Pool-Daten aus Homeassistant heraus muss das Login-Passwort bei Installation eingegeben werden, oder in den Optionen später nachgetragen werden werden, das Passwort wird nur für die Änderung der Pooldaten benötigt! Wollt ihr die Daten über HA nicht ändern, wird das Passwort nicht benötigt!
 
 **Achtung:** Nach einer Änderung eines Pool-Datensatzes wird der Miner automatisch neu gestartet!
 
 ---
-
-### Support & Spenden 
-
-Wenn dir meine Arbeit gefällt und dir diese Integration weiterhilft, freue ich mich über eine kleine Unterstützung:
-
-## <span style="color: orange; font-size: 1.4em;">₿</span>  Bitcoin: 
-``` 
-bc1qkz7mtp23cmshxnru96lzgeayu0urlysvqk5vry
-```
-<img width="240" height="247" alt="Donations_240px" src="https://github.com/user-attachments/assets/196f68e4-b0e8-4f27-bded-8c4fe13b9d45" />
-
-## ⚡Lightning : 
-```
-toughnote102@walletofsatoshi.com
-```
-<img width="239" height="272" alt="Self_Wallet of Satoshi" src="https://github.com/user-attachments/assets/d1f63d0d-33ef-4b32-ad14-23f5b6dbd131" />
-
- ...und vielleicht gebt ihr mir einen [![GitHub stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s?style=social)](https://github.com/jinx-22/avalon_nano3s/stargazers), damit das Repo besser gefunden wird - Danke!
-
-----
-
 
 ### Installation
 
@@ -84,14 +63,15 @@ toughnote102@walletofsatoshi.com
 3. Integration über **Einstellungen → Geräte & Dienste → Integration hinzufügen**
 4. IP-Adresse des Miners und ggf. Passwort des Miners eingeben -> OK
 
-### Über HACS
+### Über HACS (manuell)
 
-1. Repository zu HACS hinzufügen:  
-   `https://github.com/jinx-22/avalon_nano3s`
-2. "Integration" installieren
-3. Home Assistant neu starten
-4. Integration über **Einstellungen → Geräte & Dienste → Integration hinzufügen**
-5. IP-Adresse des Miners und ggf. Passwort des Miners eingeben -> OK
+1. HACS -> oben rechts 3-Punkte-Menü
+2. Benutzerdefiniertes Repository zu HACS hinzufügen:  
+   `https://github.com/jinx-22/avalon_nano3s` + `Integration` wahlen
+3. "Integration" unter HACS suchen und installieren
+4. Home Assistant neu starten
+5. Integration über **Einstellungen → Geräte & Dienste → Integration hinzufügen**
+6. IP-Adresse des Miners und ggf. Passwort des Miners eingeben -> OK
 
 ### Manuell
 
@@ -102,6 +82,28 @@ toughnote102@walletofsatoshi.com
 2. Home Assistant neu starten
 3. Integration über **Einstellungen → Geräte & Dienste → Integration hinzufügen**
 4. IP-Adresse des Miners und ggf. Passwort des Miners eingeben -> OK
+
+---
+
+### Support, Spenden und Unterstützung! 
+
+Wenn dir meine Arbeit gefällt und sie für dich einen Nutzen und Wert hat, freue ich mich über eine kleine Unterstützung:
+
+## <span style="color: orange; font-size: 1.4em;">₿</span>  Bitcoin: 
+``` 
+bc1qkz7mtp23cmshxnru96lzgeayu0urlysvqk5vry
+```
+<img width="160" height="162" alt="Donations_240px" src="https://github.com/user-attachments/assets/196f68e4-b0e8-4f27-bded-8c4fe13b9d45" />
+
+## ⚡Lightning : 
+```
+toughnote102@walletofsatoshi.com
+```
+<img width="160" height="180" alt="Self_Wallet of Satoshi" src="https://github.com/user-attachments/assets/d1f63d0d-33ef-4b32-ad14-23f5b6dbd131" />
+
+**Vielen Dank** ,und gebt mir einen kostenlosen [![GitHub stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s?style=social)](https://github.com/jinx-22/avalon_nano3s/stargazers), dann finden andere auch den Weg hierher - Danke!
+
+
 ---
 
 ### 🐛 Bugs / Feature Requests
