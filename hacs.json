@@ -1,6 +1,6 @@
 {
   "name": "Avalon Nano 3S",
-  "content_in_root": false,
+  "content_in_root": true,
   "domains": ["sensor", "button", "light", "select"],
   "homeassistant": "2026.1.0",
   "logo": "logo.png",
