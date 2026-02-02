@@ -1,6 +1,3 @@
-
-<img width="100" height="100" alt="logo" src="https://github.com/user-attachments/assets/a0fa0a03-ac01-46dd-a215-0b93cd77d4fc" /> 
-
 # "Avalon Nano 3S" Integration für Home Assistant! 
 
 
