@@ -28,7 +28,8 @@ Bisher getestet:
 
 **Hinweis**:
 
-Die Intergration könnte auch mit anderen Firmwarversionen oder auch mit dem Nano 3 kompatibel sein, dies kann ich mangels Gerät nicht testen, daher ist Feedback gewünscht!
+Die Intergration könnte auch mit anderen Firmwarversionen kompatibel sein, dies kann ich mangels Gerät nicht testen, daher ist Feedback gewünscht!
+Mit "Avalon Nano 3" funktioniert mit dieser Integration nur die Sensoren nicht der Workmode!
 
 ---
 
