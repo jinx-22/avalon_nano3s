@@ -1,7 +1,7 @@
 <img width="128" height="128" alt="logo" src="https://github.com/user-attachments/assets/b81e4c9f-ebfc-4289-a25f-4a2e879b2b3e" />
 
 # "Avalon Nano 3S" Integration for Home Assistant!
-
+*Link to German version: [Deutsch](#avalon-nano-3s---integration-für-home-assistant-deutsch)*
 ---
 
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-blue)](https://www.home-assistant.io/)  
@@ -151,7 +151,7 @@ https://github.com/jinx-22/avalon_nano3s/issues
 
 <img width="128" height="128" alt="logo" src="https://github.com/user-attachments/assets/b81e4c9f-ebfc-4289-a25f-4a2e879b2b3e" />
 
-# "Avalon Nano 3S" Integration für Home Assistant! 
+## Avalon Nano 3S - Integration für Home Assistant (deutsch)
 
 
 
