@@ -1,4 +1,4 @@
-<img width="128" height="128" alt="logo" src="https://github.com/user-attachments/assets/b81e4c9f-ebfc-4289-a25f-4a2e879b2b3e" />
+<img width="128" height="128" alt="logo" src="https://github.com/jinx-22/avalon_nano3s/blob/main/logos/nano3s_icon.png" />
 
 # "Avalon Nano 3S" Integration for Home Assistant!
 *Link to German version: [Deutsch](#avalon-nano-3s---integration-für-home-assistant-deutsch)*
