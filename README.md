@@ -144,12 +144,13 @@ https://github.com/jinx-22/avalon_nano3s/issues
 
 ---
 
-
+# Disclaimer
+This is a private open-source project and not an official product of device manufacturer. Use at your own risk.
 
 ---
 ---
 
-<img width="128" height="128" alt="logo" src="https://github.com/user-attachments/assets/b81e4c9f-ebfc-4289-a25f-4a2e879b2b3e" />
+<img width="128" height="128" alt="logo" src="https://github.com/jinx-22/avalon_nano3s/blob/main/logos/nano3s_icon.png" />
 
 ## Avalon Nano 3S - Integration für Home Assistant (deutsch)
 
@@ -276,5 +277,8 @@ https://github.com/jinx-22/avalon_nano3s/issues
 **Apache License 2.0**  -> [Lizens (Volltext)](https://www.apache.org/licenses/LICENSE-2.0)
 
 ---
+# Haftungsausschluss
+Dies ist ein privates Open-Source-Projekt und kein offizielles Produkt vom Gerätehersteller. Benutzung auf eigene Gefahr.
 
+---
 
