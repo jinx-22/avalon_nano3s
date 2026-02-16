@@ -16,7 +16,8 @@
 
 ---
 
-### Version: 1.0.0.0
+### Version 1.0.0.1 (edit readme.md)
+Version: 1.0.0.0 first release
 
 Tested so far:
 
@@ -165,7 +166,8 @@ This is a private open-source project and not an official product of device manu
 - Pool Konfigurationsdaten ändern! (Passwort erforderlich!)
 ---
 
-### Version: 1.0.0.0 
+### Version 1.0.0.1 (readme.md angepasst)
+Version: 1.0.0.0 erstes Release
 
 Bisher getestet:
 
