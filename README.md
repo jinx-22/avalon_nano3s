@@ -99,10 +99,10 @@ I’d appreciate a small donation — every contribution helps further developme
 <p align="center">
 ⚡ <b>Lightning Address:</b>
 <br><br>
-<code>toughnote102@walletofsatoshi.com</code>
+<code>usefulplay52@walletofsatoshi.com</code>
 <br>
 
-<img width="160" height="180" alt="Self_Wallet of Satoshi" src="https://github.com/user-attachments/assets/d1f63d0d-33ef-4b32-ad14-23f5b6dbd131" />
+<img height="450" alt="Self_Wallet of Satoshi" src="https://github.com/user-attachments/assets/65cc18d9-05d1-4a00-8ccc-9922fdb54baf" />
 <br><br>
 or:
 <br><br>
@@ -234,9 +234,9 @@ freue ich mich über eine kleine Unterstützung — jede Spende hilft, das Proje
 <p align="center">
 ⚡ <b>Lightning Adresse:</b>
 <br> <br>
-<code>toughnote102@walletofsatoshi.com</code>
+<code>usefulplay52@walletofsatoshi.com</code>
 <br>
-<img width="160" height="180" alt="Self_Wallet of Satoshi" src="https://github.com/user-attachments/assets/d1f63d0d-33ef-4b32-ad14-23f5b6dbd131" />
+<img height="450" alt="Self_Wallet of Satoshi" src="https://github.com/user-attachments/assets/65cc18d9-05d1-4a00-8ccc-9922fdb54baf" />
 <br> <br>
 oder: 
 <br>
