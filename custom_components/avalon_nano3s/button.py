@@ -19,6 +19,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     api: AsyncAvalonAPI = data["api"]
     entities = [
         AvalonRebootButton(coordinator, entry, api),
+        AvalonFanAutoButton(coordinator, entry, api),
     ]
     async_add_entities(entities)
 
@@ -55,5 +56,40 @@ class AvalonRebootButton(AvalonBaseButton):
                 _LOGGER.error("Reboot failed: %s", result.get("message"))
         except Exception as err:
             _LOGGER.error("Exception during reboot: %s", err)
+        finally:
+            await self.coordinator.async_request_refresh()
+            
+class AvalonFanAutoButton(AvalonBaseButton):
+    def __init__(
+        self,
+        coordinator: AvalonMinerCoordinator,
+        entry: ConfigEntry,
+        api: AsyncAvalonAPI,
+    ):
+        super().__init__(
+            coordinator,
+            entry,
+            api,
+            translation_key="fan_auto",
+        )
+
+        self._attr_icon = "mdi:fan-auto"
+
+    async def async_press(self) -> None:
+        try:
+            result = await self.api.set_fan_speed(-1)
+
+            if not result.get("success", False):
+                _LOGGER.error(
+                    "Fan auto failed: %s",
+                    result.get("message"),
+                )
+
+        except Exception as err:
+            _LOGGER.error(
+                "Exception during fan auto: %s",
+                err,
+            )
+
         finally:
             await self.coordinator.async_request_refresh()
