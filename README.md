@@ -16,13 +16,21 @@
 
 ---
 
-### Version 1.0.0.1 (edit readme.md)
+### Version 1.0.1.0
+Two new Entitys:
+Add Fan-Speed Slider for manuel Fan control -> 15% (560rpm) - 100% (4660rpm).
+(Use it on your own risk!!!)
+Add Button to go back to Fan-Auto-Modus.
+
+Version 1.0.0.1 (edit readme.md)
 Version: 1.0.0.0 first release
 
 Tested so far:
 
-- Avalon Nano 3S (Firmware 25061101_97e23a6)
-
+### - Avalon Nano 3S -FINE! (Firmware 25061101_97e23a6)
+- Avalon Nano 3 - only sensors
+- Avalon Q - only Sensors an Fan-Control
+- Avalon Mini - only sensors - no Feedback
 ---
 
 **Note:**
@@ -166,13 +174,21 @@ This is a private open-source project and not an official product of device manu
 - Pool Konfigurationsdaten ändern! (Passwort erforderlich!)
 ---
 
-### Version 1.0.0.1 (readme.md angepasst)
-Version: 1.0.0.0 erstes Release
+### Version 1.0.1.0
+Zwei neue Entitäten:
+Lüfter-Gschwindigkeitsregler für manuelle Steuerung hinzugefügt -> 15% (560rpm) - 100% (4660rpm).
+Vorsicht: Die Temperatur im Auge behalten! Benuzung auf eigenes Risiko!!!
+Button für Zurückstellung zum Lüfter-Auto-Modus hinzugefügt.
 
-Bisher getestet:
+Version 1.0.0.1 (readme.md aktualisiert für HACS)
+Version: 1.0.0.0 Erstes release
 
-- Avalon Nano 3s (mit Firmware 25061101_97e23a6)
+Getestete Geräte:
 
+### - Avalon Nano 3S - funktioniert! (Firmware 25061101_97e23a6)
+- Avalon Nano 3 - Nur sensoren
+- Avalon Q - Sensoren, Lüftergeschwindigkeit, Lüfter-Auto-Modus, Reboot
+- Avalon Mini - only sensors - ????? -> no Feedback
 
 **Hinweis**:
 
