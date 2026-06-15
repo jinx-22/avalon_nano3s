@@ -293,14 +293,19 @@
     },
 
     "button": {
-      "reboot": {
-        "name": "Reboot"
-      }
+      "reboot": { "name": "Reboot" },
+      "fan_auto": { "name": "Fan Auto" }
     },
 
     "light": {
       "led_color": {
         "name": "LED Color"
+      }
+    },
+
+    "number": {
+      "fan_speed": {
+        "name": "Fan Speed"
       }
     },
 
