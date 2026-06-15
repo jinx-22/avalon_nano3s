@@ -238,7 +238,15 @@ class AsyncAvalonAPI:
 
     async def set_workmode(self, level: int) -> Dict[str, Any]:
         return await self._command("ascset", f"0,workmode,set,{level}")
-
+        
+    async def set_fan_speed(self, speed: int) -> Dict[str, Any]:
+        if speed != -1:
+            speed = max(15, min(100, int(speed)))
+        return await self._command(
+            "ascset",
+            f"0,fan-spd,{speed}"
+        )
+    
     async def set_led(self, effect: int, bright: int, temper: int, r: int, g: int, b: int) -> Dict[str, Any]:
         bright = max(5, min(100, int(bright)))
         param = f"0,ledset,{effect}-{bright}-{temper}-{r}-{g}-{b}"
