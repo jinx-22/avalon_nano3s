@@ -295,13 +295,17 @@
       "stratum_url": { "name": "Stratum Adresse" }
     },
     "button": {
-      "reboot": {
-        "name": "Neustart"
-      }
+      "reboot": { "name": "Neustart" },
+      "fan_auto": { "name": "Lüfter Auto" }
     },
     "light": {
       "led_color": { 
         "name": "LED Farbe"
+      }
+    },
+    "number": {
+      "fan_speed": {
+        "name": "Lüfter"
       }
     },
     "select": {
