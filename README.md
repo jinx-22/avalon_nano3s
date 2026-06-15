@@ -17,13 +17,18 @@
 ---
 
 ### Version 1.0.1.0
-Two new Entitys:
-Add Fan-Speed Slider for manuel Fan control -> 15% (560rpm) - 100% (4660rpm).
-(Use it on your own risk!!!)
-Add Button to go back to Fan-Auto-Modus.
 
-Version 1.0.0.1 (edit readme.md)
-Version: 1.0.0.0 first release
+Two new entitys:
+- Add Fan-Speed Slider for manuel Fan control -> 15% (560rpm) - 100% (4660rpm).
+- Add Button to go back to Fan-Auto-Modus.
+
+#### Attention : Use it on your own risk!!!
+
+---
+
+- Version 1.0.0.1 (edit readme.md for HACS)
+- Version: 1.0.0.0 first release
+
 
 Tested so far:
 
@@ -176,12 +181,16 @@ This is a private open-source project and not an official product of device manu
 
 ### Version 1.0.1.0
 Zwei neue Entitäten:
-Lüfter-Gschwindigkeitsregler für manuelle Steuerung hinzugefügt -> 15% (560rpm) - 100% (4660rpm).
-Vorsicht: Die Temperatur im Auge behalten! Benuzung auf eigenes Risiko!!!
-Button für Zurückstellung zum Lüfter-Auto-Modus hinzugefügt.
+- Lüfter-Gschwindigkeitsregler für manuelle Steuerung hinzugefügt -> 15% (560rpm) - 100% (4660rpm).
+- Button für Zurückstellung zum Lüfter-Auto-Modus hinzugefügt.
+#### Vorsicht: Die Temperatur im Auge behalten! Benuzung auf eigenes Risiko!!!
 
-Version 1.0.0.1 (readme.md aktualisiert für HACS)
-Version: 1.0.0.0 Erstes release
+---
+
+- Version 1.0.0.1 (readme.md aktualisiert für HACS)
+- Version: 1.0.0.0 Erstes release
+
+---
 
 Getestete Geräte:
 
