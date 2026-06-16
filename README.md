@@ -53,6 +53,7 @@ This integration allows full monitoring and control of the **Avalon Nano 3S Mine
 Features:
 
 - Live miner statistics (temperature, fan, hashrate, power consumption)
+- Fan control -> 15% (560rpm) - 100% (4660rpm) - (Update 1.1.0.0)
 - **LED control** (RGB colors, brightness, effects)
 - Mining **workmode** selection (Low, Mid, High)
 - Reboot button directly from Home Assistant
@@ -213,6 +214,7 @@ Diese Integration erlaubt die vollständige Überwachung und Steuerung des **Ava
 Funktionen:
 
 - Live-Statistiken des Miners (Temperatur, Lüfter, Hashrate, Energieverbrauch)
+- Steuerung des Lüfters -> 15% (560rpm) - 100% (4660rpm) - (Update 1.1.0.0)
 - Steuerung der **LEDs** (RGB-Farben, Helligkeit, Effekt)
 - Auswahl des Mining **Workmodes** (Low, Mid, High)
 - Reboot-Button für den Miner direkt aus HA
