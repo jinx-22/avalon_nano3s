@@ -24,6 +24,12 @@ Two new entitys:
 
 #### Attention : Use it on your own risk!!!
 
+**Note:**
+When my Nano 3s Fan to 50%: 
+
+- Hashrate +0,02 TH/s up
+- ASIC MAX  72-74 °C (Extends the lifespan)
+
 ---
 
 - Version 1.0.0.1 (edit readme.md for HACS)
@@ -186,6 +192,11 @@ Zwei neue Entitäten:
 - Button für Zurückstellung zum Lüfter-Auto-Modus hinzugefügt.
 #### Vorsicht: Die Temperatur im Auge behalten! Benuzung auf eigenes Risiko!!!
 
+**Hinweis:**
+Wenn ich den Nano 3s Lüfter auf 50% stelle: 
+
+- Hashrate nimmt +0,02 TH/s zu
+- ASIC MAX ca 72-74 °C (verlängert die Lebensdauer!)
 ---
 
 - Version 1.0.0.1 (readme.md aktualisiert für HACS)
