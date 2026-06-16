@@ -16,7 +16,7 @@
 
 ---
 
-### Version 1.0.1.0
+### Version 1.1.0.0
 
 Two new entitys:
 - Add Fan-Speed Slider for manuel Fan control -> 15% (560rpm) - 100% (4660rpm).
@@ -179,7 +179,7 @@ This is a private open-source project and not an official product of device manu
 - Pool Konfigurationsdaten ändern! (Passwort erforderlich!)
 ---
 
-### Version 1.0.1.0
+### Version 1.1.0.0
 Zwei neue Entitäten:
 - Lüfter-Gschwindigkeitsregler für manuelle Steuerung hinzugefügt -> 15% (560rpm) - 100% (4660rpm).
 - Button für Zurückstellung zum Lüfter-Auto-Modus hinzugefügt.
