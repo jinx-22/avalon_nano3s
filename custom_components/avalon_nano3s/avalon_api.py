@@ -287,3 +287,24 @@ class AsyncAvalonAPI:
             "raw": raw_result,
             "parsed": parsed
         }
+        
+    async def switch_pool(self, pool_index: int) -> Dict[str, Any]:
+        """Runtime switch without reboot"""
+        raw = await self._send_raw(f"switchpool|{pool_index}")
+        if not raw:
+            return {"success": False, "message": "No response", "raw": None}
+    
+        parsed = self._parse_generic(raw)
+        status = parsed.get("STATUS", {})
+        if isinstance(status, list):
+            status = status[0]
+    
+        success = status.get("STATUS") == "S"
+        message = status.get("Msg", "")
+    
+        return {
+            "success": success,
+            "message": message,
+            "raw": raw,
+            "parsed": parsed,
+        }   
