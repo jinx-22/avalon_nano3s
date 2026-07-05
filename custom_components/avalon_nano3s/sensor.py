@@ -52,7 +52,7 @@ VISIBLE_ESTATS_KEYS = {
     "Freq",
     "MTavg",
     "PS_HashboardVoltage",
-    "PS_Ping",
+    "Ping",
     "PS_Power",
 }
 VISIBLE_POOLS_DIAG = {"URL", "User", "Password", "Stratum URL", "Status", "Work Difficulty"}
