@@ -81,6 +81,7 @@ SENSOR_CONFIG = {
     "FanR": (None, PERCENTAGE, SensorStateClass.MEASUREMENT, lambda v: round(float(str(v).replace("%", "")), 1)),
     "PS_Power": (SensorDeviceClass.POWER, "W", SensorStateClass.MEASUREMENT, lambda v: int(v)),
     "PS_HashboardVoltage": (None, "mV", None, lambda v: int(v)),
+    "Ping": (None, "ms", None, lambda v: int(v)),
     "PS_Ping": (None, "ms", None, lambda v: int(v)),
     "GHSspd": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1000, 3)),
     "GHSavg": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1000, 3)),
