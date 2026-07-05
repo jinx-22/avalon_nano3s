@@ -65,6 +65,7 @@ async def async_setup_entry(
         [
             AvalonWorkModeSelect(coordinator, api, entry.entry_id, device_info),
             AvalonLedEffectSelect(coordinator, api, entry.entry_id, device_info),
+            AvalonPoolSelect(coordinator, api, entry.entry_id, device_info),
         ]
     )
 
