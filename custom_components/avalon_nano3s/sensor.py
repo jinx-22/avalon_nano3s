@@ -44,6 +44,8 @@ VISIBLE_ESTATS_KEYS = {
     "OTemp",
     "TAvg",
     "TarT",
+    "tmax",
+    "pvt_t0",
     "Fan1",
     "FanR",
     "DH",
@@ -52,17 +54,16 @@ VISIBLE_ESTATS_KEYS = {
     "Freq",
     "MTavg",
     "PS_HashboardVoltage",
-    "Ping",
+    "PING",
     "PS_Power",
 }
-VISIBLE_POOLS_DIAG = {"URL", "User", "Password", "Stratum URL", "Status", "Work Difficulty"}
+VISIBLE_POOLS_DIAG = {"URL", "User", "Password", "Stratum URL", "Status", "Stratum Active", "Work Difficulty"}
 VISIBLE_POOLS_KEYS = {
     "Last Share Time",
     "Diff1 Shares",
     "Pool Rejected%",
     "Pool Stale%",
     "Current Block Height",
-    "Stratum Active",
     "Stratum Difficulty",
 }
 
@@ -81,7 +82,7 @@ SENSOR_CONFIG = {
     "FanR": (None, PERCENTAGE, SensorStateClass.MEASUREMENT, lambda v: round(float(str(v).replace("%", "")), 1)),
     "PS_Power": (SensorDeviceClass.POWER, "W", SensorStateClass.MEASUREMENT, lambda v: int(v)),
     "PS_HashboardVoltage": (None, "mV", None, lambda v: int(v)),
-    "Ping": (None, "ms", None, lambda v: int(v)),
+    "PING": (None, "ms", None, lambda v: int(v)),
     "PS_Ping": (None, "ms", None, lambda v: int(v)),
     "GHSspd": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1000, 3)),
     "GHSavg": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1000, 3)),
