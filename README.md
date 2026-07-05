@@ -15,8 +15,13 @@
 - Change pool configuration data (password required!)
 
 ---
+### Version 1.2.0.0
 
-### Version 1.1.0.0
+- fixed "Ping to Pool" (old Ping is Ping internal)
+- fixed any bugs in translations
+- add choose Pool (1-3) connection "without reboot !!!" -> after choose you musst wait ca. 140 seconds!
+
+Version 1.1.0.0
 
 Two new entitys:
 - Add Fan-Speed Slider for manuel Fan control -> 15% (560rpm) - 100% (4660rpm).
@@ -186,7 +191,14 @@ This is a private open-source project and not an official product of device manu
 - Pool Konfigurationsdaten ändern! (Passwort erforderlich!)
 ---
 
-### Version 1.1.0.0
+### Version 1.2.0.0
+
+- „Ping zum Pool“ korrigiert ( der bisherige „Ping zum Pool“ zeigte den internen Ping an )
+- einige Fehler in den Übersetzungen behoben
+- Möglichkeit hinzugefügt, den aktiven Pool (1-3) zu wechseln (kein Neustart erforderlich!)
+  Hinweis: Nach der Auswahl muss ca. 140 Sekunden gewartet werden, bis der Wechsel vollständig übernommen wurde.
+
+Version 1.1.0.0
 Zwei neue Entitäten:
 - Lüfter-Gschwindigkeitsregler für manuelle Steuerung hinzugefügt -> 15% (560rpm) - 100% (4660rpm).
 - Button für Zurückstellung zum Lüfter-Auto-Modus hinzugefügt.
