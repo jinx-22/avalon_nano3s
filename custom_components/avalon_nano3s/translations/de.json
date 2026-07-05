@@ -310,7 +310,8 @@
     },
     "select": {
       "workmode": { "name": "Arbeitsmodus" },
-      "led_effect": { "name": "LED Effekt" }
+      "led_effect": { "name": "LED Effekt" },
+      "pool": { "name": "Pool ändern - ca. 140s warten!!!" }
     }
   }
 }
