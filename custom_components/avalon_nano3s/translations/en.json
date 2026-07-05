@@ -136,7 +136,7 @@
       "p3_work_difficulty": { "name": "P3 Difficulty" },
       "pool_rejected": { "name": "Pool Rejected %" },
       "ps_hashboardvoltage": { "name": "Hashboard Voltage" },
-      "ps_ping": { "name": "Ping to Pool" },
+      "ps_ping": { "name": "Ping intern" },
       "ps_power": { "name": "Power" },
       "rejected": { "name": "Shares Rejected" },
       "tart": { "name": "Target Temperature" },
