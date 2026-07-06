@@ -311,7 +311,7 @@
 
     "select": {
       "workmode": { "name": "Work Mode" },
-      "led_effect": { "name": "LED Effect" }
+      "led_effect": { "name": "LED Effect" },
       "pool": { "name": "choose Pool - wait 140s !!!" }
     }
   }
