@@ -159,10 +159,10 @@ class AvalonLedEffectSelect(CoordinatorEntity, SelectEntity):
         await self.coordinator.async_request_refresh()
 
 # =========================
-# Pool Switch Select
+# Pool-Switch Select
 # =========================
 class AvalonPoolSelect(CoordinatorEntity, SelectEntity):
-    """Pool switching via CGMiner API (robust version)"""
+    """Pool switching via CGMiner API."""
 
     _attr_has_entity_name = True
     _attr_options = ["Pool 1", "Pool 2", "Pool 3"]
@@ -175,7 +175,7 @@ class AvalonPoolSelect(CoordinatorEntity, SelectEntity):
         self._attr_device_info = device_info
 
     def _safe_pools(self):
-        """NEVER fail during setup"""
+        """Never fail during setup."""
         try:
             data = getattr(self.coordinator, "data", None)
             if not data:
@@ -199,18 +199,14 @@ class AvalonPoolSelect(CoordinatorEntity, SelectEntity):
                     continue
 
                 if str(pool.get("Stratum Active", "")).lower() == "true":
-                    idx = pool.get("POOL", None)
-
                     try:
-                        idx = int(idx)
-                        return f"Pool {idx + 1}"
+                        return f"Pool {int(pool.get('POOL', 0)) + 1}"
                     except Exception:
                         return "Pool 1"
 
             return "Pool 1"
 
-        except Exception as e:
-            _LOGGER.debug("PoolSelect current_option fallback: %s", e)
+        except Exception:
             return "Pool 1"
 
     async def async_select_option(self, option: str) -> None:
@@ -219,18 +215,10 @@ class AvalonPoolSelect(CoordinatorEntity, SelectEntity):
         try:
             idx = mapping.get(option)
             if idx is None:
-                _LOGGER.warning("Invalid pool option: %s", option)
                 return
 
-            result = await self.api.switch_pool(idx)
-
-            _LOGGER.info(
-                "Pool switch %s -> %s",
-                option,
-                "OK" if result.get("success") else result.get("message"),
-            )
-
+            await self.api.switch_pool(idx)
             await self.coordinator.async_request_refresh()
 
-        except Exception as e:
-            _LOGGER.error("Pool switch crashed: %s", e)
+        except Exception:
+            pass
