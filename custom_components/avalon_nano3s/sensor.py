@@ -45,6 +45,7 @@ VISIBLE_ESTATS_KEYS = {
     "TAvg",
     "TarT",
     "TMax",
+    "MTmax",
     "PVT_T0",
     "Fan1",
     "FanR",
