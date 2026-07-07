@@ -58,7 +58,7 @@ VISIBLE_ESTATS_KEYS = {
     "PING",
     "PS_Power",
 }
-VISIBLE_POOLS_DIAG = {"URL", "User", "Password", "Stratum URL", "Status", "Stratum Active", "Work Difficulty"}
+VISIBLE_POOLS_DIAG = {"URL", "User", "Password", "Status", "Stratum Active", "Work Difficulty"}
 VISIBLE_POOLS_KEYS = {
     "Last Share Time",
     "Diff1 Shares",
