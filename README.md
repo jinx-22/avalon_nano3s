@@ -17,7 +17,7 @@
 ---
 ### Version 1.2.0.0
 
-- fixed "Ping to Pool" (old Ping is Ping internal)
+- fixed "Ping to Pool"
 - fixed any bugs in translations
 - add choose Pool (1-3) connection "without reboot !!!" -> after choose you musst wait ca. 140 seconds!
 
@@ -33,7 +33,7 @@ Two new entitys:
 When my Nano 3s Fan to 50%: 
 
 - Hashrate +0,02 TH/s up
-- ASIC MAX  72-74 °C (Extends the lifespan)
+- ASIC MAX  78-79 °C (Extends the lifespan)
 
 ---
 
@@ -65,9 +65,11 @@ Features:
 
 - Live miner statistics (temperature, fan, hashrate, power consumption)
 - Fan control -> 15% (560rpm) - 100% (4660rpm) - (Update 1.1.0.0)
+- Button to go back to Fan-Auto-Modus.
 - **LED control** (RGB colors, brightness, effects)
 - Mining **workmode** selection (Low, Mid, High)
 - Reboot button directly from Home Assistant
+- Choose Pool (1-3) connection "without reboot !!!" -> after choose you musst wait ca. 140 seconds!
 - Enter/change pool data via the **GUI Config Flow**
 
 ---
@@ -193,7 +195,7 @@ This is a private open-source project and not an official product of device manu
 
 ### Version 1.2.0.0
 
-- „Ping zum Pool“ korrigiert ( der bisherige „Ping zum Pool“ zeigte den internen Ping an )
+- „Ping zum Pool“ korrigiert
 - einige Fehler in den Übersetzungen behoben
 - Möglichkeit hinzugefügt, den aktiven Pool (1-3) zu wechseln (kein Neustart erforderlich!)
   Hinweis: Nach der Auswahl muss ca. 140 Sekunden gewartet werden, bis der Wechsel vollständig übernommen wurde.
@@ -238,9 +240,12 @@ Funktionen:
 
 - Live-Statistiken des Miners (Temperatur, Lüfter, Hashrate, Energieverbrauch)
 - Steuerung des Lüfters -> 15% (560rpm) - 100% (4660rpm) - (Update 1.1.0.0)
+- Zurückstellung zum Lüfter-Auto-Modus
 - Steuerung der **LEDs** (RGB-Farben, Helligkeit, Effekt)
 - Auswahl des Mining **Workmodes** (Low, Mid, High)
 - Reboot-Button für den Miner direkt aus HA
+- Aktiven Pool (1-3) wechseln im laufenden Betrieb (kein Neustart erforderlich!)
+  Hinweis: Nach der Auswahl muss ca. 140 Sekunden gewartet werden, bis der Wechsel vollständig übernommen wurde.
 - Eingabe/Änderung der Pool-Daten über den **GUI Config Flow** <p>
 
 **Hinweis zum ändern der Pool-Daten:**
