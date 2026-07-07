@@ -33,7 +33,7 @@ Two new entitys:
 When my Nano 3s Fan to 50%: 
 
 - Hashrate +0,02 TH/s up
-- ASIC MAX  78-79 °C (Extends the lifespan)
+- ASIC MAX  74-79 °C (Extends the lifespan when under 80)
 
 ---
 
@@ -210,7 +210,8 @@ Zwei neue Entitäten:
 Wenn ich den Nano 3s Lüfter auf 50% stelle: 
 
 - Hashrate nimmt +0,02 TH/s zu
-- ASIC MAX ca 72-74 °C (verlängert die Lebensdauer!)
+- ASIC MAX ca 74-79 °C (verlängert die Lebensdauer!)
+  Am besten eine Automatition das die Temp nicht über 80 geht!
 ---
 
 - Version 1.0.0.1 (readme.md aktualisiert für HACS)
