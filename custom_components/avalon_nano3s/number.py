@@ -50,7 +50,7 @@ class AvalonFanSpeedNumber(CoordinatorEntity, NumberEntity):
     _attr_native_step = 1
     _attr_native_unit_of_measurement = "%"
     _attr_icon = "mdi:fan"
-    
+
     def __init__(
         self,
         coordinator: AvalonMinerCoordinator,
@@ -61,17 +61,29 @@ class AvalonFanSpeedNumber(CoordinatorEntity, NumberEntity):
         super().__init__(coordinator)
 
         self.api = api
+        self._fan_speed = None
 
         self._attr_unique_id = f"{entry_id}_fan_speed"
         self._attr_device_info = device_info
 
     @property
     def native_value(self):
+        if self._fan_speed is not None:
+            return self._fan_speed
+
         estats = self.coordinator.data.get("estats", {})
         fans = estats.get("fans", {})
 
         return fans.get("FanR", 100)
 
     async def async_set_native_value(self, value: float) -> None:
-        await self.api.set_fan_speed(int(value))
+        value = int(value)
+
+        await self.api.set_fan_speed(value)
+
+        # Optimistisches Update
+        self._fan_speed = value
+        self.async_write_ha_state()
+
+        # Miner später abfragen
         await self.coordinator.async_request_refresh()
