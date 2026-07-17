@@ -15,9 +15,10 @@
 - Change pool configuration data (password required!)
 
 ---
-### Version 1.2.0.0
+### Version 1.2.0.1
 
 - fixed "Ping to Pool"
+- fixed stay value after change FAN%
 - fixed any bugs in translations
 - add choose Pool (1-3) connection "without reboot !!!" -> after choose you musst wait ca. 140 seconds!
 
@@ -193,9 +194,10 @@ This is a private open-source project and not an official product of device manu
 - Pool Konfigurationsdaten ändern! (Passwort erforderlich!)
 ---
 
-### Version 1.2.0.0
+### Version 1.2.0.1
 
 - „Ping zum Pool“ korrigiert
+- Lüfter-Wert in % bleibt nach Änderung bestehen bis zur nächsten Aktualisierung!
 - einige Fehler in den Übersetzungen behoben
 - Möglichkeit hinzugefügt, den aktiven Pool (1-3) zu wechseln (kein Neustart erforderlich!)
   Hinweis: Nach der Auswahl muss ca. 140 Sekunden gewartet werden, bis der Wechsel vollständig übernommen wurde.
