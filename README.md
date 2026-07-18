@@ -31,9 +31,9 @@ Two new entitys:
 #### Attention : Use it on your own risk!!!
 
 **Note:**
-When my Nano 3s Fan to 50%: 
+When my Nano 3s Fan to 54%: 
 
-- Hashrate +0,02 TH/s up
+- Hashrate +0,06 TH/s up, with 54% Fan -> My Nano3s up to 6,64 - 6,68 TH/s after few tests!
 - ASIC MAX  74-79 °C (Extends the lifespan when under 80)
 
 ---
@@ -211,7 +211,7 @@ Zwei neue Entitäten:
 **Hinweis:**
 Wenn ich den Nano 3s Lüfter auf 50% stelle: 
 
-- Hashrate nimmt +0,02 TH/s zu
+- Hashrate nimmt +0,05 TH/s zu. -> Mein Nano3s läuft nach ausgibigen Tests nun mit 6,64- 6,68 TH/s
 - ASIC MAX ca 74-79 °C (verlängert die Lebensdauer!)
   Am besten eine Automatition das die Temp nicht über 80 geht!
 ---
