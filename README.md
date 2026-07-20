@@ -8,10 +8,10 @@
 [![HACS](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=flat-square)](https://github.com/hacs/integration)
 [![Release](https://img.shields.io/github/v/release/jinx-22/avalon_nano3s?sort=semver&style=flat-square)](https://github.com/jinx-22/avalon_nano3s/releases)
 [![License](https://img.shields.io/github/license/jinx-22/avalon_nano3s?style=flat-square)](LICENSE)
-[![Usage](https://img.shields.io/badge/dynamic/json?style=flat-square&logo=home-assistant&logoColor=white&label=Usage&suffix=%20installs&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.avalon_nano3s.total)](https://analytics.home-assistant.io/)
+[![Usage](https://img.shields.io/badge/dynamic/json?style=flat-square&logo=home-assistant&logoColor=white&label=Usage&suffix=%20installs&color=dc3545&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.avalon_nano3s.total)](https://my.home-assistant.io/redirect/hacs_repository/?owner=jinx-22&repository=avalon_nano3s&category=integration)
 [![GitHub Stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s?style=flat-square)](https://github.com/jinx-22/avalon_nano3s/stargazers)
-[![Donate BTC](https://img.shields.io/badge/₿-Bitcoin-F7931A?style=flat-square)](bitcoin:bc1qkz7mtp23cmshxnru96lzgeayu0urlysvqk5vry)
-[![Donate Lightning](https://img.shields.io/badge/⚡-Lightning-FFD700?style=flat-square)](lightning:toughnote102@walletofsatoshi.com)
+[![Donate Bitcoin](https://img.shields.io/badge/₿-Bitcoin-F7931A?style=flat-square)](#bitcoin)
+[![Donate Lightning](https://img.shields.io/badge/⚡-Lightning-FFD700?style=flat-square)](#lightning)
 
 **Avalon Nano 3S** is a **Home Assistant integration** for the Canaan Avalon Nano 3S ASIC miner.
 
@@ -125,14 +125,14 @@ Simply search for **“Avalon Nano 3S”** in HACS and download — restart Home
 6. Enter miner IP address and optional password → OK
 
 ---
-
 ## 🧡 Support & Donations
 
 If you like this integration and it adds real value to your Home Assistant setup,  
 I’d appreciate a small donation — every contribution helps further development 🚀
 
+## Lightning
 <p align="center">
-⚡ <b>Lightning Address:</b>
+⚡ <b>Address:</b>
 <br><br>
 <code>usefulplay52@walletofsatoshi.com</code>
 <br>
@@ -140,11 +140,11 @@ I’d appreciate a small donation — every contribution helps further developme
 <img height="450" alt="Self_Wallet of Satoshi" src="https://github.com/user-attachments/assets/65cc18d9-05d1-4a00-8ccc-9922fdb54baf" />
 <br><br>
 or:
-<br><br>
+<br><br></p>
 
+## Bitcoin
 <div align="center">
-<img width="25" height="25" alt="Bitcoin_25px" src="https://github.com/user-attachments/assets/f74cad36-8c05-4a33-89cd-b998075af33b" />
- Bitcoin:
+<img width="100" height="100" alt="Bitcoin_100px" src="https://github.com/user-attachments/assets/f74cad36-8c05-4a33-89cd-b998075af33b" />
 <br><br>
 
 <code>bc1qkz7mtp23cmshxnru96lzgeayu0urlysvqk5vry</code>
@@ -188,8 +188,8 @@ This is a private open-source project and not an official product of device manu
 
 
 ---
-[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-blue)](https://www.home-assistant.io/) [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)  [![Release](https://img.shields.io/github/v/release/jinx-22/avalon_nano3s?sort=semver)](https://github.com/jinx-22/avalon_nano3s/releases)  [![License](https://img.shields.io/github/license/jinx-22/avalon_nano3s)](LICENSE) [![Donat BTC](https://img.shields.io/badge/₿-orange?style=flat-square)](bitcoin:bc1qkz7mtp23cmshxnru96lzgeayu0urlysvqk5vry)
-[![Donate ⚡](https://img.shields.io/badge/⚡-yellow?style=flat-square)](lightning:toughnote102@walletofsatoshi.com) [![stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s)](https://github.com/jinx-22/avalon_nano3s/stargazers)
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-blue)](https://www.home-assistant.io/) [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)  [![Release](https://img.shields.io/github/v/release/jinx-22/avalon_nano3s?sort=semver)](https://github.com/jinx-22/avalon_nano3s/releases)  [![License](https://img.shields.io/github/license/jinx-22/avalon_nano3s)](LICENSE) [![Donate Bitcoin](https://img.shields.io/badge/₿-Bitcoin-F7931A?style=flat-square)](#bitcoin)
+[![Donate Lightning](https://img.shields.io/badge/⚡-Lightning-FFD700?style=flat-square)](#lightning) [![stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s)](https://github.com/jinx-22/avalon_nano3s/stargazers)
 
 **Avalon Nano 3S** ist eine **Home Assistant Integration** für den Canaan Avalon Nano 3S ASIC Miner.  
 
