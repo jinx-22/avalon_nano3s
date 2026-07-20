@@ -9,7 +9,7 @@
 [![Release](https://img.shields.io/github/v/release/jinx-22/avalon_nano3s?sort=semver&style=flat-square)](https://github.com/jinx-22/avalon_nano3s/releases)
 [![License](https://img.shields.io/github/license/jinx-22/avalon_nano3s?style=flat-square)](LICENSE)
 [![Usage](https://img.shields.io/badge/dynamic/json?style=flat-square&logo=home-assistant&logoColor=white&label=Usage&suffix=%20installs&color=dc3545&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.avalon_nano3s.total)](https://my.home-assistant.io/redirect/hacs_repository/?owner=jinx-22&repository=avalon_nano3s&category=integration)
-[![GitHub Stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s?style=flat-square)](https://github.com/jinx-22/avalon_nano3s/stargazers)
+[![stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s)](https://github.com/jinx-22/avalon_nano3s/stargazers)
 [![Donate Bitcoin](https://img.shields.io/badge/₿-Bitcoin-F7931A?style=flat-square)](#bitcoin)
 [![Donate Lightning](https://img.shields.io/badge/⚡-Lightning-FFD700?style=flat-square)](#lightning)
 
@@ -188,8 +188,14 @@ This is a private open-source project and not an official product of device manu
 
 
 ---
-[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-blue)](https://www.home-assistant.io/) [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)  [![Release](https://img.shields.io/github/v/release/jinx-22/avalon_nano3s?sort=semver)](https://github.com/jinx-22/avalon_nano3s/releases)  [![License](https://img.shields.io/github/license/jinx-22/avalon_nano3s)](LICENSE) [![Donate Bitcoin](https://img.shields.io/badge/₿-Bitcoin-F7931A?style=flat-square)](#bitcoin)
-[![Donate Lightning](https://img.shields.io/badge/⚡-Lightning-FFD700?style=flat-square)](#lightning) [![stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s)](https://github.com/jinx-22/avalon_nano3s/stargazers)
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-blue?style=flat-square)](https://www.home-assistant.io/)
+[![HACS](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=flat-square)](https://github.com/hacs/integration)
+[![Release](https://img.shields.io/github/v/release/jinx-22/avalon_nano3s?sort=semver&style=flat-square)](https://github.com/jinx-22/avalon_nano3s/releases)
+[![License](https://img.shields.io/github/license/jinx-22/avalon_nano3s?style=flat-square)](LICENSE)
+[![Usage](https://img.shields.io/badge/dynamic/json?style=flat-square&logo=home-assistant&logoColor=white&label=Usage&suffix=%20installs&color=dc3545&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.avalon_nano3s.total)](https://my.home-assistant.io/redirect/hacs_repository/?owner=jinx-22&repository=avalon_nano3s&category=integration)
+[![stars](https://img.shields.io/github/stars/jinx-22/avalon_nano3s)](https://github.com/jinx-22/avalon_nano3s/stargazers)
+[![Donate Bitcoin](https://img.shields.io/badge/₿-Bitcoin-F7931A?style=flat-square)](#bitcoin)
+[![Donate Lightning](https://img.shields.io/badge/⚡-Lightning-FFD700?style=flat-square)](#lightning) 
 
 **Avalon Nano 3S** ist eine **Home Assistant Integration** für den Canaan Avalon Nano 3S ASIC Miner.  
 
