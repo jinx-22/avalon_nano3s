@@ -19,8 +19,11 @@
 - Workmode control (Low / Mid / High)
 - Control LED color, brightness and effects
 - Reboot button
+- Auto Fan button ((v1.1.0.0)
 - Change pool configuration data (password required!)
-
+- Choose Pool (1-3) connection "without reboot !!!" (v1.2.0.0)
+  (Note: after choose you musst wait ca. 140 seconds!)
+- Control Fan speed -> 15% (560rpm) - 100% (4660rpm). (V1.1.0.0)
 ---
 ### Version 1.2.0.1
 
@@ -202,9 +205,14 @@ This is a private open-source project and not an official product of device manu
 
 - 230 Sensoren (ca. 60 aktiv)  
 - Workmode-Steuerung (Low/Mid/High)  
-- Steuerung der LED-Farbe, Helligkeit und Effekte  
-- Reboot-Button 
+- Steuerung der LED-Farbe, Helligkeit und Effekte
+- Lüfter-Gschwindigkeitsregler für manuelle Steuerung hinzugefügt -> 15% (560rpm) - 100% (4660rpm) (V1.1.0.0)
+- Reboot-Button
+- Button für Zurückstellung zum Lüfter-Auto-Modus (v1.1.0.0)
 - Pool Konfigurationsdaten ändern! (Passwort erforderlich!)
+- Aktiven Pool (1-3) wechseln "kein Neustart erforderlich!" (V1.2.0.0)
+  Hinweis: Nach der Auswahl muss ca. 140 Sekunden gewartet werden, bis der Wechsel vollständig übernommen wurde.
+
 ---
 
 ### Version 1.2.0.1
