@@ -16,6 +16,10 @@
 **Avalon Nano 3S** is a **Home Assistant integration** for the Canaan Avalon Nano 3S ASIC miner.
 
 - 230 sensors (approx. 60 active)
+  - Block found
+  - best share
+  - etc...
+  
 - Workmode control (Low / Mid / High)
 - Control LED color, brightness and effects
 - Reboot button
@@ -203,7 +207,10 @@ This is a private open-source project and not an official product of device manu
 **Avalon Nano 3S** ist eine **Home Assistant Integration** für den Canaan Avalon Nano 3S ASIC Miner.  
 
 
-- 230 Sensoren (ca. 60 aktiv)  
+- 230 Sensoren (ca. 60 aktiv)
+  - gefundene Blöcke
+  - bester Share
+  - etc...
 - Workmode-Steuerung (Low/Mid/High)  
 - Steuerung der LED-Farbe, Helligkeit und Effekte
 - Lüfter-Gschwindigkeitsregler für manuelle Steuerung hinzugefügt -> 15% (560rpm) - 100% (4660rpm) (V1.1.0.0)
