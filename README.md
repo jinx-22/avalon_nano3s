@@ -29,7 +29,11 @@
   (Note: after choose you musst wait ca. 140 seconds!)
 - Control Fan speed -> 15% (560rpm) - 100% (4660rpm). (V1.1.0.0)
 ---
-### Version 1.2.0.1
+### Version 1.2.0.2
+
+- "Fan control" from slider-entity to NumberMode.BOX  # # Input field with + / - instead of slider
+
+Version 1.2.0.1
 
 - fixed "Ping to Pool"
 - fixed stay value after change FAN%
@@ -222,7 +226,11 @@ This is a private open-source project and not an official product of device manu
 
 ---
 
-### Version 1.2.0.1
+### Version 1.2.0.2
+
+- Fan-Steuerung von Slider auf NumberMode.BOX umgestellt -> Eingabefeld mit + / – statt Slider
+
+Version 1.2.0.1
 
 - „Ping zum Pool“ korrigiert
 - Lüfter-Wert in % bleibt nach Änderung bestehen bis zur nächsten Aktualisierung!
