@@ -18,6 +18,9 @@
 - 230 sensors (approx. 60 active)
   - Block found
   - best share
+  - power
+  - Temp´s
+  - ASIC chip frequency
   - etc...
   
 - Workmode control (Low / Mid / High)
@@ -214,7 +217,11 @@ This is a private open-source project and not an official product of device manu
 - 230 Sensoren (ca. 60 aktiv)
   - gefundene Blöcke
   - bester Share
+  - Leistung
+  - Temperaturen
+  - ASIC Chip Frequenz
   - etc...
+
 - Workmode-Steuerung (Low/Mid/High)  
 - Steuerung der LED-Farbe, Helligkeit und Effekte
 - Lüfter-Gschwindigkeitsregler für manuelle Steuerung hinzugefügt -> 15% (560rpm) - 100% (4660rpm) (V1.1.0.0)
