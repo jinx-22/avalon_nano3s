@@ -32,7 +32,16 @@
   (Note: after choose you musst wait ca. 140 seconds!)
 - Control Fan speed -> 15% (560rpm) - 100% (4660rpm). (V1.1.0.0)
 ---
-### Version 1.2.0.2
+
+### Version 1.2.0.3
+
+Fixed:
+- Corrected pool index mapping inpool choose (select) entity. 
+  (Note: After switching pools, the Nano3S take approximately 140 seconds to complete the switch)
+
+- Pool IDs from CGMiner API are now mapped correctly to configured pool entries.
+
+Version 1.2.0.2
 
 - "Fan control" from slider-entity to NumberMode.BOX  # # Input field with + / - instead of slider
 
@@ -233,7 +242,15 @@ This is a private open-source project and not an official product of device manu
 
 ---
 
-### Version 1.2.0.2
+### Version 1.2.0.3
+
+Behoben:
+- Korrekte Zuordnung der Pool-Indizes in der Pool-Auswahl-Entity. 
+  (Hinweis: Nach Wechsel braucht der Nano3s ca. 140 Sekunden)
+
+- Pool-IDs aus der CGMiner-API werden jetzt korrekt den konfigurierten Pool-Einträgen zugeordnet.
+
+Version 1.2.0.2
 
 - Fan-Steuerung von Slider auf NumberMode.BOX umgestellt -> Eingabefeld mit + / – statt Slider
 
