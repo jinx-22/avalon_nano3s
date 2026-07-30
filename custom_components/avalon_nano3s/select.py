@@ -193,31 +193,43 @@ class AvalonPoolSelect(CoordinatorEntity, SelectEntity):
         try:
             pools = self._safe_pools()
 
+            p1 = p2 = p3 = False
+
             for pool in pools.values():
                 if not isinstance(pool, dict):
                     continue
 
-                if str(pool.get("Stratum Active", "")).lower() == "true":
-                    try:
-                        return f"Pool {int(pool.get('POOL', 0)) + 1}"
-                    except Exception:
-                        return "Pool 1"
+                active = str(pool.get("Stratum Active", "")).lower() == "true"
+                pool_nr = int(pool.get("POOL", -1))
+
+                if pool_nr == 0:
+                    p1 = active
+                elif pool_nr == 1:
+                    p2 = active
+                elif pool_nr == 2:
+                    p3 = active
+
+            # Firmware-Bug kompensieren:
+            # Pool 3 hat Vorrang vor Pool 2, Pool 2 vor Pool 1.
+            if p3:
+                return "Pool 3"
+            if p2:
+                return "Pool 2"
+            if p1:
+                return "Pool 1"
 
             return "Pool 1"
 
         except Exception:
             return "Pool 1"
-
+            
     async def async_select_option(self, option: str) -> None:
         mapping = {"Pool 1": 0, "Pool 2": 1, "Pool 3": 2}
 
-        try:
-            idx = mapping.get(option)
-            if idx is None:
-                return
+        idx = mapping.get(option)
+        if idx is None:
+            return
 
-            await self.api.switch_pool(idx)
-            await self.coordinator.async_request_refresh()
+        await self.api.switch_pool(idx)
 
-        except Exception:
-            pass
+        await self.coordinator.async_request_refresh()
