@@ -1,13 +1,19 @@
 from __future__ import annotations
+
 import logging
 from datetime import timedelta
-from homeassistant.core import HomeAssistant
+
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import Platform, CONF_HOST, CONF_PORT, CONF_TIMEOUT
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.const import CONF_HOST, CONF_PORT, CONF_TIMEOUT, Platform
+from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.helpers.update_coordinator import (
+    DataUpdateCoordinator,
+    UpdateFailed,
+)
+
 from .avalon_api import AsyncAvalonAPI
-from .const import DOMAIN, CONF_UPDATE_INTERVAL
+from .const import CONF_UPDATE_INTERVAL, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -21,9 +27,14 @@ PLATFORMS: list[Platform] = [
 
 
 class AvalonMinerCoordinator(DataUpdateCoordinator[dict]):
-    """Data coordinator für Avalon Nano 3S"""
+    """Data coordinator for Avalon Nano 3S."""
 
-    def __init__(self, hass: HomeAssistant, api: AsyncAvalonAPI, update_interval: timedelta) -> None:
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        api: AsyncAvalonAPI,
+        update_interval: timedelta,
+    ) -> None:
         super().__init__(
             hass,
             _LOGGER,
@@ -32,8 +43,9 @@ class AvalonMinerCoordinator(DataUpdateCoordinator[dict]):
         )
         self.api = api
 
-    async def _async_update_data(self) -> dict | None:
-        """Fetch data from API – minimales Logging, HA-konform"""
+    async def _async_update_data(self) -> dict:
+        """Fetch data from the Avalon Nano 3S API."""
+
         try:
             return {
                 "version": await self.api.version(),
@@ -43,17 +55,23 @@ class AvalonMinerCoordinator(DataUpdateCoordinator[dict]):
                 "devs": await self.api.devs(),
                 "pools": await self.api.pools(),
             }
+
         except Exception as err:
-            # Danach nur debug (kein Spam)
-            if self.last_update_success:
-                _LOGGER.warning("Update failed: %s", err)
-            else:
-                _LOGGER.debug("Update failed: %s", err)
+            # UpdateFailed is intentionally handled by
+            # DataUpdateCoordinator. This causes coordinator
+            # entities to become unavailable until the API
+            # becomes reachable again.
+            raise UpdateFailed(
+                f"Avalon Nano 3S API unavailable: {err}"
+            ) from err
 
-            raise UpdateFailed(err) from err
 
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+) -> bool:
+    """Set up Avalon Nano 3S from a config entry."""
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     update_interval_sec = entry.options.get(
         CONF_UPDATE_INTERVAL,
         entry.data.get(CONF_UPDATE_INTERVAL, 10),
@@ -83,19 +101,33 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "manufacturer": "Canaan",
         "model": "Nano 3S",
     }
-    
+
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         "api": api,
         "coordinator": coordinator,
         "device_info": device_info,
     }
 
-    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    await hass.config_entries.async_forward_entry_setups(
+        entry,
+        PLATFORMS,
+    )
+
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+async def async_unload_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+) -> bool:
+    """Unload Avalon Nano 3S."""
+
+    unload_ok = await hass.config_entries.async_unload_platforms(
+        entry,
+        PLATFORMS,
+    )
+
     if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id)
+
     return unload_ok
