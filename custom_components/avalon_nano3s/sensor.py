@@ -8,6 +8,7 @@ from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorStateClass,
 )
+from homeassistant.core import callback
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
@@ -257,6 +258,46 @@ class AvalonSensor(CoordinatorEntity, SensorEntity):
             return attrs
 
 # ===============================
+# Sensor-Layout (auch offline verfügbar)
+# ===============================
+def _sensor_defaults(api_type, section_name, key):
+    """enabled_default und Kategorie eines Sensors bestimmen."""
+    if api_type == "version":
+        return key in VISIBLE_VERSION_KEYS, EntityCategory.DIAGNOSTIC
+    if api_type == "summary":
+        return key in VISIBLE_SUMMARY_KEYS, None
+    if api_type == "estats":
+        return key in VISIBLE_ESTATS_KEYS, None
+
+    # pools
+    if section_name == "p1":
+        enabled = key in (VISIBLE_POOLS_KEYS | VISIBLE_POOLS_DIAG)
+    else:
+        enabled = key in VISIBLE_POOLS_DIAG
+    category = EntityCategory.DIAGNOSTIC if key in VISIBLE_POOLS_DIAG else None
+    return enabled, category
+
+
+def _layout_from_data(data):
+    """Liste [api_type, section, key] aus den Miner-Daten ableiten."""
+    layout = []
+
+    for api_type in ("version", "summary", "estats"):
+        for section_name, section_values in data.get(api_type, {}).items():
+            if not isinstance(section_values, dict):
+                continue
+            for key in section_values:
+                layout.append([api_type, section_name, key])
+
+    pools = data.get("pools", {})
+    for pool_id in ("p1", "p2", "p3"):
+        for key in pools.get(pool_id, {}):
+            layout.append(["pools", pool_id, key])
+
+    return layout
+
+
+# ===============================
 # Setup Entry
 # ===============================
 async def async_setup_entry(hass, entry, async_add_entities):
@@ -264,60 +305,66 @@ async def async_setup_entry(hass, entry, async_add_entities):
 
     coordinator = data["coordinator"]
     device_info = data["device_info"]
+    store = data["layout_store"]
 
-    sensors = []
+    known = set()
 
-    def add_sensors(api_type, visible_keys, category=None):
-        api_data = coordinator.data.get(api_type, {})
-        for section_name, section_values in api_data.items():
-            if not isinstance(section_values, dict):
+    @callback
+    def _add_layout(layout):
+        sensors = []
+        for api_type, section_name, key in layout:
+            ident = (api_type, section_name, key)
+            if ident in known:
                 continue
+            known.add(ident)
 
-            for key in section_values.keys():
-                enabled = key in visible_keys
-
-                sensors.append(
-                    AvalonSensor(
-                        coordinator,
-                        entry.entry_id,
-                        api_type,
-                        section_name,
-                        key,
-                        enabled,
-                        category,
-                        device_info,
-                    )
-                )
-
-    add_sensors("version", VISIBLE_VERSION_KEYS, EntityCategory.DIAGNOSTIC)
-    add_sensors("summary", VISIBLE_SUMMARY_KEYS)
-    add_sensors("estats", VISIBLE_ESTATS_KEYS)
-
-    pools = coordinator.data.get("pools", {})
-    for pool_id in ("p1", "p2", "p3"):
-        pool_data = pools.get(pool_id, {})
-        if not pool_data:
-            continue
-
-        for key in pool_data.keys():
-            if pool_id == "p1":
-                enabled_default = key in (VISIBLE_POOLS_KEYS | VISIBLE_POOLS_DIAG)
-            else:
-                enabled_default = key in VISIBLE_POOLS_DIAG
-
-            category = EntityCategory.DIAGNOSTIC if key in VISIBLE_POOLS_DIAG else None
-
+            enabled, category = _sensor_defaults(api_type, section_name, key)
             sensors.append(
                 AvalonSensor(
                     coordinator,
                     entry.entry_id,
-                    "pools",
-                    pool_id,
+                    api_type,
+                    section_name,
                     key,
-                    enabled_default,
+                    enabled,
                     category,
                     device_info,
                 )
             )
 
-    async_add_entities(sensors)
+        if sensors:
+            async_add_entities(sensors)
+
+    # Zuletzt bekanntes Layout laden: so existieren die Sensoren auch, wenn
+    # der Miner beim Start aus ist (dann "nicht verfügbar").
+    stored = await store.async_load()
+    if not isinstance(stored, list):
+        stored = []
+    stored = [
+        item
+        for item in stored
+        if isinstance(item, list)
+        and len(item) == 3
+        and all(isinstance(part, str) for part in item)
+    ]
+
+    synced = False
+
+    @callback
+    def _sync_from_miner() -> None:
+        """Beim ersten erfolgreichen Poll Layout abgleichen und speichern."""
+        nonlocal synced
+
+        if synced or not coordinator.data:
+            return
+        synced = True
+
+        layout = _layout_from_data(coordinator.data)
+        _add_layout(layout)
+
+        if layout != stored:
+            store.async_delay_save(lambda: layout, 1)
+
+    _add_layout(stored)
+    _sync_from_miner()
+    entry.async_on_unload(coordinator.async_add_listener(_sync_from_miner))
