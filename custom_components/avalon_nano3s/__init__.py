@@ -6,7 +6,7 @@ from datetime import timedelta
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_HOST, CONF_PORT, CONF_TIMEOUT, Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.helpers.storage import Store
 from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
     UpdateFailed,
@@ -25,6 +25,17 @@ PLATFORMS: list[Platform] = [
     Platform.NUMBER,
 ]
 
+STORAGE_VERSION = 1
+
+
+def layout_store(hass: HomeAssistant, entry_id: str) -> Store:
+    """Store für das zuletzt bekannte Sensor-Layout eines Miners.
+
+    Damit existieren die Sensoren auch dann, wenn der Miner beim
+    HA-Start ausgeschaltet ist (sie sind dann "nicht verfügbar").
+    """
+    return Store(hass, STORAGE_VERSION, f"{DOMAIN}_layout_{entry_id}")
+
 
 class AvalonMinerCoordinator(DataUpdateCoordinator[dict]):
     """Data coordinator for Avalon Nano 3S."""
@@ -34,20 +45,28 @@ class AvalonMinerCoordinator(DataUpdateCoordinator[dict]):
         hass: HomeAssistant,
         api: AsyncAvalonAPI,
         update_interval: timedelta,
+        config_entry: ConfigEntry,
     ) -> None:
         super().__init__(
             hass,
             _LOGGER,
             name="Avalon Nano 3S",
             update_interval=update_interval,
+            config_entry=config_entry,
         )
         self.api = api
+        self._default_retries = api.retries
+        self._online = False
 
     async def _async_update_data(self) -> dict:
         """Fetch data from the Avalon Nano 3S API."""
 
+        # Ist der Miner (noch) nicht erreichbar, nicht mehrfach wiederholen:
+        # ein Poll dauert dann max. 1x Timeout statt 3x Timeout + Pausen.
+        self.api.retries = self._default_retries if self._online else 0
+
         try:
-            return {
+            data = {
                 "version": await self.api.version(),
                 "summary": await self.api.summary(),
                 "stats": await self.api.stats(),
@@ -55,8 +74,11 @@ class AvalonMinerCoordinator(DataUpdateCoordinator[dict]):
                 "devs": await self.api.devs(),
                 "pools": await self.api.pools(),
             }
+            self._online = True
+            return data
 
         except Exception as err:
+            self._online = False
             # UpdateFailed is intentionally handled by
             # DataUpdateCoordinator. This causes coordinator
             # entities to become unavailable until the API
@@ -87,13 +109,14 @@ async def async_setup_entry(
         hass,
         api,
         timedelta(seconds=update_interval_sec),
+        entry,
     )
 
-    try:
-        await coordinator.async_config_entry_first_refresh()
-    except Exception as err:
-        _LOGGER.error("Initial setup failed: %s", err)
-        raise ConfigEntryNotReady from err
+    # Bewusst KEIN async_config_entry_first_refresh() / ConfigEntryNotReady:
+    # Ein ausgeschalteter Miner ist kein Einrichtungsfehler. Die Integration
+    # wird normal geladen, die Entitäten sind "nicht verfügbar", bis der
+    # Miner wieder antwortet (Coordinator pollt weiter).
+    await coordinator.async_refresh()
 
     device_info = {
         "identifiers": {(DOMAIN, entry.data[CONF_HOST])},
@@ -106,6 +129,7 @@ async def async_setup_entry(
         "api": api,
         "coordinator": coordinator,
         "device_info": device_info,
+        "layout_store": layout_store(hass, entry.entry_id),
     }
 
     await hass.config_entries.async_forward_entry_setups(
@@ -131,3 +155,12 @@ async def async_unload_entry(
         hass.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
+
+
+async def async_remove_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+) -> None:
+    """Gespeichertes Sensor-Layout entfernen, wenn der Miner gelöscht wird."""
+
+    await layout_store(hass, entry.entry_id).async_remove()
