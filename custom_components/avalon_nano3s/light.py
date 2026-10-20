@@ -83,6 +83,11 @@ class AvalonLedLight(CoordinatorEntity, LightEntity):
     # Coordinator Update
     # =========================
     def _handle_coordinator_update(self) -> None:
+        # Miner offline und noch nie Daten gehabt -> nur Verfügbarkeit updaten
+        if not self.coordinator.data:
+            self.async_write_ha_state()
+            return
+
         led = self.coordinator.data.get("estats", {}).get("led", {})
         user = led.get("LEDUser", {})
 
