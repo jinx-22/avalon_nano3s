@@ -40,8 +40,16 @@
 ### Version 1.2.2.0
 
 Behoben:
-* Beim Wechsel des Pools wird nun im Auswahlmenü „Bitte warten → Poolwechsel“ angezeigt. Der Wechsel ist abgeschlossen, sobald die Anzeige wieder zum zuvor ausgewählten „Pool X“ zurückwechselt!
-* Wenn der Miner ausgeschaltet oder nicht erreichbar ist, wird die Integration nicht mehr als fehlerhaft markiert. (Diesmal wirklich behoben!)
+- Die Integration wird auch bei ausgeschaltetem oder nicht erreichbarem Miner normal geladen. Der Zustand "Einrichtungsfehler / Wiederholung" erscheint nicht mehr. Nur die Entitäten des betroffenen Miners werden "nicht verfügbar" und erholen sich automatisch, sobald er wieder erreichbar ist. Bei mehreren Nano 3S wird jeder Miner einzeln behandelt.
+- Sensoren werden gemerkt: Startet Home Assistant, während der Miner aus ist, sind alle Sensoren bereits vorhanden (als nicht verfügbar) und erscheinen nicht erst nach dem ersten erfolgreichen Abruf.
+- Keine wiederholten Verbindungsversuche mehr, solange der Miner offline ist. Ein fehlgeschlagener Abruf wird dadurch schneller erkannt.
+- Die LED-Entität schlägt nicht mehr fehl, wenn der Miner noch keine Daten geliefert hat.
+
+Geändert:
+- Pool-Auswahl: Der aktive Pool wird jetzt über die Pool-Priorität erkannt und direkt nach dem Wechsel korrekt angezeigt.
+- Während des Pool-Wechsels zeigt das Dropdown "Bitte warten -> Poolwechsel", bis der neue Pool den ersten Share bestätigt hat (Timeout nach 5 Minuten).
+- Übersetzungen (DE/EN) für den Zustand "Bitte warten -> Poolwechsel" ergänzt.
+- Home-Assistant-Konformität: Der Config-Eintrag wird an den Daten-Coordinator übergeben, und das gespeicherte Sensor-Layout wird beim Entfernen der Integration mitgelöscht.
 
 ### Version 1.2.1.0
 
