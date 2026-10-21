@@ -1,317 +1,370 @@
-# custom_components/avalon_nano3s/select.py
+# custom_components/avalon_nano3s/sensor.py
 from __future__ import annotations
-
 import logging
-import time
+from datetime import datetime, timezone
 
-from homeassistant.components.select import SelectEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.components.sensor import (
+    SensorEntity,
+    SensorDeviceClass,
+    SensorStateClass,
+)
+from homeassistant.core import callback
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-
-from . import AvalonMinerCoordinator
-from .avalon_api import AsyncAvalonAPI
+from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
+PERCENTAGE = "%"
 
-# Pool-Wechsel: Der Miner hasht nach dem Umschalten noch ca. 2 Minuten mit
-# Arbeit des alten Pools weiter, der neue Pool bestätigt erst danach den
-# ersten Share. So lange gilt der Wechsel als "laufend" (Attribut switching).
-POOL_SWITCH_TIMEOUT = 300  # Sekunden, danach wird "switching" in jedem Fall beendet
-POOL_SWITCH_GRACE = 15     # Sekunden, in denen noch veraltete Daten ignoriert werden
-
-# =========================
-# Workmode Mapping
-# =========================
-WORK_MODES = {
-    "Low": 0,
-    "Mid": 1,
-    "High": 2,
+# ===========================
+# Sensor-Keys
+# ===========================
+VISIBLE_VERSION_KEYS = {
+    "MODEL",
+    "CGMiner",
+    "LVERSION",
 }
-REVERSE_WORK_MODES = {v: k for k, v in WORK_MODES.items()}
-
-# =========================
-# LED Effekt Mapping
-# =========================
-LED_EFFECTS = {
-    "LED_off": 0,
-    "Stay": 1,
-    "Flash": 2,
-    "Breathing": 3,
-    "Loop": 4,
+VISIBLE_SUMMARY_KEYS = {
+    "MHS av",
+    "MHS 5s",
+    "MHS 5m",
+    "MHS 15m",
+    "Found Blocks",
+    "Accepted",
+    "Rejected",
+    "Utility",
+    "Elapsed",
+    "Best Share",
+    "Device Rejected%",
+    "Pool Rejected%",
+    "Total MH",
+    "Device Hardware%",
 }
-REVERSE_LED_EFFECTS = {v: k for k, v in LED_EFFECTS.items()}
-
-# =========================
-# Pool Mapping
-# =========================
-POOL_INDEX = {
-    "Pool 1": 0,
-    "Pool 2": 1,
-    "Pool 3": 2,
+VISIBLE_ESTATS_KEYS = {
+    "OTemp",
+    "TAvg",
+    "TarT",
+    "TMax",
+    "MTmax",
+    "PVT_T0",
+    "Fan1",
+    "FanR",
+    "DH",
+    "GHSspd",
+    "GHSmm",
+    "Freq",
+    "MTavg",
+    "PS_HashboardVoltage",
+    "PING",
+    "PS_Power",
 }
-REVERSE_POOL_INDEX = {v: k for k, v in POOL_INDEX.items()}
+VISIBLE_POOLS_DIAG = {"URL", "User", "Password", "Status", "Stratum Active", "Work Difficulty"}
+VISIBLE_POOLS_KEYS = {
+    "Last Share Time",
+    "Diff1 Shares",
+    "Pool Rejected%",
+    "Pool Stale%",
+    "Current Block Height",
+    "Stratum Difficulty",
+}
 
-# =========================
-# Setup Entry
-# =========================
-async def async_setup_entry(
-    hass: HomeAssistant,
-    entry: ConfigEntry,
-    async_add_entities: AddEntitiesCallback,
-) -> None:
-    data = hass.data[DOMAIN][entry.entry_id]
+# ===============================
+# Sensor-Konfiguration
+# ===============================
+SENSOR_CONFIG = {
+    "ITemp": (SensorDeviceClass.TEMPERATURE, "°C", SensorStateClass.MEASUREMENT, lambda v: round(float(v), 1)),
+    "OTemp": (SensorDeviceClass.TEMPERATURE, "°C", SensorStateClass.MEASUREMENT, lambda v: round(float(v), 1)),
+    "TMax": (SensorDeviceClass.TEMPERATURE, "°C", SensorStateClass.MEASUREMENT, lambda v: round(float(v), 1)),
+    "TAvg": (SensorDeviceClass.TEMPERATURE, "°C", SensorStateClass.MEASUREMENT, lambda v: round(float(v), 1)),
+    "TarT": (SensorDeviceClass.TEMPERATURE, "°C", SensorStateClass.MEASUREMENT, lambda v: round(float(v), 1)),
+    "MTmax": (SensorDeviceClass.TEMPERATURE, "°C", SensorStateClass.MEASUREMENT, lambda v: round(float(v), 1)),
+    "MTavg": (SensorDeviceClass.TEMPERATURE, "°C", SensorStateClass.MEASUREMENT, lambda v: round(float(v), 1)),
+    "Fan1": (None, "RPM", SensorStateClass.MEASUREMENT, lambda v: int(float(v))),
+    "FanR": (None, PERCENTAGE, SensorStateClass.MEASUREMENT, lambda v: round(float(str(v).replace("%", "")), 1)),
+    "PS_Power": (SensorDeviceClass.POWER, "W", SensorStateClass.MEASUREMENT, lambda v: int(v)),
+    "PS_HashboardVoltage": (None, "mV", None, lambda v: int(v)),
+    "PING": (None, "ms", None, lambda v: int(v)),
+    "PS_Ping": (None, "ms", None, lambda v: int(v)),
+    "GHSspd": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1000, 3)),
+    "GHSavg": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1000, 3)),
+    "GHSmm": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1000, 3)),
+    "Freq": (None, "MHz", None, lambda v: round(float(v), 2)),
+    "MHS av": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1_000_000, 3)),
+    "MHS 5s": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1_000_000, 3)),
+    "MHS 5m": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1_000_000, 3)),
+    "MHS 15m": (None, "TH/s", SensorStateClass.MEASUREMENT, lambda v: round(float(v) / 1_000_000, 3)),
+    "Total MH": (None, "PH", SensorStateClass.TOTAL_INCREASING, lambda v: round(v / 1_000_000_000, 3)),
+    "Device Rejected%": (None, PERCENTAGE, SensorStateClass.MEASUREMENT, lambda v: round(float(v), 2)),
+    "Pool Rejected%": (None, PERCENTAGE, SensorStateClass.MEASUREMENT, lambda v: round(float(v), 2)),
+    "Device Hardware%": (None, PERCENTAGE, SensorStateClass.MEASUREMENT, lambda v: round(float(v), 2)),
+    "Pool Stale%": (None, PERCENTAGE, SensorStateClass.MEASUREMENT, lambda v: round(float(v), 2)),
+    "Accepted": (None, None, SensorStateClass.TOTAL_INCREASING, lambda v: int(float(v))),
+    "Rejected": (None, None, SensorStateClass.TOTAL_INCREASING, lambda v: int(float(v))),
+    "Best Share": (None, None, SensorStateClass.TOTAL_INCREASING, lambda v: int(float(v))),
+    "Found Blocks": (None, "Blocks", SensorStateClass.TOTAL_INCREASING, lambda v: int(float(v))),
+    "Current Block Height": (None, None, SensorStateClass.TOTAL_INCREASING, lambda v: int(float(v))),
+    "Diff1 Shares": (None, None, SensorStateClass.TOTAL_INCREASING, lambda v: int(float(v))),
+    "Stratum Difficulty": (None, None, SensorStateClass.TOTAL_INCREASING, lambda v: int(float(v))),
+    "Activation": (None, None, None, lambda v: int(float(v))),
+    "MEMFREE": (None, "KiB", SensorStateClass.MEASUREMENT, lambda v: int(float(v))),
+}
 
-    coordinator: AvalonMinerCoordinator = data["coordinator"]
-    api: AsyncAvalonAPI = data["api"]
-    device_info = data["device_info"]
+# ===============================
+# Sensor-Klasse
+# ===============================
 
-    async_add_entities(
-        [
-            AvalonWorkModeSelect(coordinator, api, entry.entry_id, device_info),
-            AvalonLedEffectSelect(coordinator, api, entry.entry_id, device_info),
-            AvalonPoolSelect(coordinator, api, entry.entry_id, device_info),
-        ]
-    )
-
-# =========================
-# Workmode Select
-# =========================
-class AvalonWorkModeSelect(CoordinatorEntity, SelectEntity):
-    """SelectEntity für den Workmode des Avalon Nano 3S."""
-
-    _attr_has_entity_name = True
-    _attr_options = list(WORK_MODES.keys())
-    _attr_translation_key = "workmode"
-
+class AvalonSensor(CoordinatorEntity, SensorEntity):
     def __init__(
         self,
-        coordinator: AvalonMinerCoordinator,
-        api: AsyncAvalonAPI,
-        entry_id: str,
-        device_info: dict,
+        coordinator,
+        entry_id,
+        api_type,
+        section_name,
+        key,
+        enabled_default,
+        category,
+        device_info,
     ):
         super().__init__(coordinator)
-        self.api = api
 
-        self._attr_unique_id = f"{entry_id}_workmode"
+        # WICHTIG: speichern für native_value
+        self._api_type = api_type
+        self._section_name = section_name
+        self._key = key.strip()
+
+        raw = self._key
+        norm = raw.replace("%", "").lower().replace(" ", "_")
+
+        translation_key = f"{section_name}_{norm}" if api_type == "pools" else norm
+
+        # HA 2026 offizieller Fallback
+        self.entity_description = SensorEntityDescription(
+            key=norm,
+            translation_key=translation_key,
+            name=raw,   # ← RAW NAME FALLBACK
+            entity_category=category,
+        )
+
+        self._attr_has_entity_name = True
+
+        self._attr_unique_id = f"{entry_id}_{api_type}_{section_name}_{norm}"
         self._attr_device_info = device_info
+        self._attr_entity_registry_enabled_default = enabled_default
+
+        config = SENSOR_CONFIG.get(self._key)
+        if config:
+            device_class, unit, state_class, _ = config
+            if device_class:
+                self._attr_device_class = device_class
+            if unit:
+                self._attr_native_unit_of_measurement = unit
+            if state_class:
+                self._attr_state_class = state_class
+
 
     @property
-    def current_option(self) -> str:
-        estats = self.coordinator.data.get("estats", {})
-        workmode_val = estats.get("WORKMODE")
+    def native_value(self):
         try:
-            return REVERSE_WORK_MODES[int(workmode_val)]
-        except (TypeError, ValueError, KeyError):
-            return "Low"
+            data = self.coordinator.data.get(self._api_type, {})
+            section = data.get(self._section_name, {})
+            value = section.get(self._key)
+            if value is None:
+                return None
 
-    async def async_select_option(self, option: str) -> None:
-        level = WORK_MODES.get(option)
-        if level is None:
-            _LOGGER.warning("Unbekannter Workmode: %s", option)
-            return
+            raw_value = value
 
-        await self.api.set_workmode(level)
-        await self.coordinator.async_request_refresh()
+            # -----------------------------
+            # PING aktualisierung
+            # -----------------------------
+            if self._key == "PS_Ping":
+                try:
+                    return round(float(str(value).strip()), 1)
+                except Exception as e:
+                    _LOGGER.debug("PS_Ping konnte nicht konvertiert werden: %s (raw=%s)", e, value)
+                    return None
 
+            # Spezieller Fall: Last Share Time → Timestamp → Datum/Uhrzeit
+            if self._key == "Last Share Time":
+                try:
+                    seconds = int(float(raw_value))
+                    if seconds <= 0:
+                        return "no connection"
 
-# =========================
-# LED Effekt Select
-# =========================
-class AvalonLedEffectSelect(CoordinatorEntity, SelectEntity):
-    """SelectEntity für die LED-Effekte des Avalon Nano 3S."""
+                    dt = datetime.fromtimestamp(seconds, tz=timezone.utc).astimezone()
+                    return dt.strftime("%H:%M – %d.%m.%Y")
+                except (ValueError, TypeError, OverflowError) as e:
+                    _LOGGER.debug("Ungültiger Timestamp in Last Share Time: %s (%s)", raw_value, e)
+                    return f"Ungültig ({raw_value})"
 
-    _attr_has_entity_name = True
-    _attr_options = list(LED_EFFECTS.keys())
-    _attr_translation_key = "led_effect"
+            # Spezieller Fall Elapsed
+            if self._key.lower() == "elapsed":
+                try:
+                    total_seconds = int(float(raw_value))
+                    hours = total_seconds // 3600
+                    minutes = (total_seconds % 3600) // 60
+                    seconds = total_seconds % 60
+                    return f"{hours}h {minutes:02d}m {seconds:02d}s"
+                except Exception as e:
+                    _LOGGER.debug("Fehler beim Formatieren von Elapsed: %s", e)
+                    return str(raw_value)
 
-    def __init__(
-        self,
-        coordinator: AvalonMinerCoordinator,
-        api: AsyncAvalonAPI,
-        entry_id: str,
-        device_info: dict,
-    ):
-        super().__init__(coordinator)
-        self.api = api
+            # Standard-Konverter
+            config = SENSOR_CONFIG.get(self._key)
+            if config:
+                _, _, _, converter = config
+                return converter(raw_value)
 
-        self._attr_unique_id = f"{entry_id}_led_effect"
-        self._attr_device_info = device_info
+            try:
+                return float(raw_value)
+            except:
+                return str(raw_value)
 
-    @property
-    def current_option(self) -> str:
-        estats = self.coordinator.data.get("estats", {})
-        led_user = estats.get("led", {}).get("LEDUser", {})
-        effect_val = led_user.get("Effect", 1)
-        return REVERSE_LED_EFFECTS.get(effect_val, "Stay")
-
-    async def async_select_option(self, option: str) -> None:
-        effect_id = LED_EFFECTS.get(option)
-        if effect_id is None:
-            _LOGGER.warning("Unbekannter LED-Effekt: %s", option)
-            return
-
-        led_user = self.coordinator.data.get("estats", {}).get("led", {}).get("LEDUser", {})
-        brightness = led_user.get("Brightness", 100)
-        color_temp = led_user.get("ColorTemp", 50)
-        r = led_user.get("R", 255)
-        g = led_user.get("G", 255)
-        b = led_user.get("B", 255)
-
-        await self.api.set_led(effect_id, brightness, color_temp, r, g, b)
-        await self.coordinator.async_request_refresh()
-
-# =========================
-# Pool-Switch Select
-# =========================
-def _to_int(value, default=-1):
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return default
-
-
-class AvalonPoolSelect(CoordinatorEntity, SelectEntity):
-    """Pool switching via CGMiner API."""
-
-    _attr_has_entity_name = True
-    _attr_options = ["Pool 1", "Pool 2", "Pool 3"]
-    _attr_translation_key = "pool"
-
-    def __init__(self, coordinator, api, entry_id, device_info):
-        super().__init__(coordinator)
-        self.api = api
-        self._attr_unique_id = f"{entry_id}_pool_select"
-        self._attr_device_info = device_info
-
-        # Laufender Pool-Wechsel (None = kein Wechsel aktiv)
-        self._switch_target = None
-        self._switch_baseline = 0
-        self._switch_started = 0.0
-
-    def _safe_pools(self):
-        """Never fail during setup."""
-        try:
-            data = getattr(self.coordinator, "data", None)
-            if not data:
-                return {}
-
-            pools = data.get("pools")
-            if not isinstance(pools, dict):
-                return {}
-
-            return pools
-        except Exception:
-            return {}
-
-    def _pool_by_number(self, pool_nr):
-        for pool in self._safe_pools().values():
-            if isinstance(pool, dict) and _to_int(pool.get("POOL")) == pool_nr:
-                return pool
-        return None
-
-    def _active_pool_nr(self):
-        """Nummer (0-2) des aktiven Pools, None wenn nicht ermittelbar.
-
-        Strategie ist Failover: Der aktive Pool ist der mit Priority 0.
-        switchpool setzt den gewählten Pool sofort auf Priority 0. "Stratum
-        Active" taugt dafür nicht, weil kurz nach einem Wechsel beide Pools
-        als aktiv gemeldet werden.
-        """
-        pools = self._safe_pools()
-
-        for pool in pools.values():
-            if isinstance(pool, dict) and _to_int(pool.get("Priority")) == 0:
-                pool_nr = _to_int(pool.get("POOL"))
-                if pool_nr >= 0:
-                    return pool_nr
-
-        # Fallback (Priority nicht vorhanden): bisheriges Verfahren
-        # Pool 3 hat Vorrang vor Pool 2, Pool 2 vor Pool 1.
-        active = {}
-        for pool in pools.values():
-            if not isinstance(pool, dict):
-                continue
-            active[_to_int(pool.get("POOL"))] = (
-                str(pool.get("Stratum Active", "")).lower() == "true"
-            )
-
-        for pool_nr in (2, 1, 0):
-            if active.get(pool_nr):
-                return pool_nr
-
-        return None
-
-    @property
-    def current_option(self) -> str:
-        try:
-            pool_nr = self._active_pool_nr()
-            if pool_nr in (0, 1, 2):
-                return f"Pool {pool_nr + 1}"
-            return "Pool 1"
-
-        except Exception:
-            return "Pool 1"
+        except Exception as e:
+            _LOGGER.debug("Fehler in native_value für Sensor %s: %s", self._attr_unique_id, e)
+            return None
 
     @property
     def extra_state_attributes(self):
-        return {"switching": self._switch_target is not None}
+        attrs = {"last_polled": datetime.now().isoformat()}
 
-    def _refresh_switching(self) -> None:
-        """Laufenden Wechsel beenden, sobald er abgeschlossen oder hinfällig ist."""
-        if self._switch_target is None:
-            return
+        try:
+            data = self.coordinator.data.get(self._api_type, {})
+            section = data.get(self._section_name, {})
+            raw_value = section.get(self._key)
 
-        elapsed = time.monotonic() - self._switch_started
+            if self._key == "Last Share Time" and raw_value is not None:
+                try:
+                    seconds = int(float(raw_value))
+                    attrs["raw_seconds"] = seconds
+                    if seconds > 0:
+                        dt = datetime.fromtimestamp(seconds, tz=timezone.utc).astimezone()
+                        attrs["last_share_iso"] = dt.isoformat()
+                except Exception as e:
+                    _LOGGER.debug("Fehler beim Parsen raw_seconds für Last Share Time: %s", e)
 
-        if elapsed > POOL_SWITCH_TIMEOUT:
-            self._switch_target = None
-            return
+            if self._key.lower() == "elapsed":
+                try:
+                    s = int(float(raw_value or 0))
+                    attrs["formatted"] = f"{s//3600}h {(s%3600)//60:02d}m {s%60:02d}s"
+                    attrs["total_seconds"] = s
+                except Exception as e:
+                    _LOGGER.debug("Fehler beim Formatieren Elapsed-Attribute: %s", e)
 
-        # Miner nicht erreichbar / keine Daten: nichts entscheiden
-        if not self.coordinator.last_update_success or not self._safe_pools():
-            return
+            return attrs
 
-        # Direkt nach dem Befehl können noch veraltete Daten eintreffen
-        if elapsed < POOL_SWITCH_GRACE:
-            return
+        except Exception as e:
+            _LOGGER.debug("Fehler in extra_state_attributes für Sensor %s: %s", self._attr_unique_id, e)
+            return attrs
 
-        # Wechsel wurde überschrieben (z. B. Neustart setzt Prioritäten zurück)
-        if self._active_pool_nr() != self._switch_target:
-            self._switch_target = None
-            return
+# ===============================
+# Sensor-Layout (auch offline verfügbar)
+# ===============================
+def _sensor_defaults(api_type, section_name, key):
+    """enabled_default und Kategorie eines Sensors bestimmen."""
+    if api_type == "version":
+        return key in VISIBLE_VERSION_KEYS, EntityCategory.DIAGNOSTIC
+    if api_type == "summary":
+        return key in VISIBLE_SUMMARY_KEYS, None
+    if api_type == "estats":
+        return key in VISIBLE_ESTATS_KEYS, None
 
-        # Neuer Pool hat den ersten Share bestätigt -> Wechsel abgeschlossen
-        pool = self._pool_by_number(self._switch_target)
-        if pool and _to_int(pool.get("Accepted"), 0) > self._switch_baseline:
-            self._switch_target = None
+    # pools
+    if section_name == "p1":
+        enabled = key in (VISIBLE_POOLS_KEYS | VISIBLE_POOLS_DIAG)
+    else:
+        enabled = key in VISIBLE_POOLS_DIAG
+    category = EntityCategory.DIAGNOSTIC if key in VISIBLE_POOLS_DIAG else None
+    return enabled, category
+
+
+def _layout_from_data(data):
+    """Liste [api_type, section, key] aus den Miner-Daten ableiten."""
+    layout = []
+
+    for api_type in ("version", "summary", "estats"):
+        for section_name, section_values in data.get(api_type, {}).items():
+            if not isinstance(section_values, dict):
+                continue
+            for key in section_values:
+                layout.append([api_type, section_name, key])
+
+    pools = data.get("pools", {})
+    for pool_id in ("p1", "p2", "p3"):
+        for key in pools.get(pool_id, {}):
+            layout.append(["pools", pool_id, key])
+
+    return layout
+
+
+# ===============================
+# Setup Entry
+# ===============================
+async def async_setup_entry(hass, entry, async_add_entities):
+    data = hass.data[DOMAIN][entry.entry_id]
+
+    coordinator = data["coordinator"]
+    device_info = data["device_info"]
+    store = data["layout_store"]
+
+    known = set()
 
     @callback
-    def _handle_coordinator_update(self) -> None:
-        self._refresh_switching()
-        super()._handle_coordinator_update()
+    def _add_layout(layout):
+        sensors = []
+        for api_type, section_name, key in layout:
+            ident = (api_type, section_name, key)
+            if ident in known:
+                continue
+            known.add(ident)
 
-    async def async_select_option(self, option: str) -> None:
-        mapping = {"Pool 1": 0, "Pool 2": 1, "Pool 3": 2}
+            enabled, category = _sensor_defaults(api_type, section_name, key)
+            sensors.append(
+                AvalonSensor(
+                    coordinator,
+                    entry.entry_id,
+                    api_type,
+                    section_name,
+                    key,
+                    enabled,
+                    category,
+                    device_info,
+                )
+            )
 
-        idx = mapping.get(option)
-        if idx is None:
+        if sensors:
+            async_add_entities(sensors)
+
+    # Zuletzt bekanntes Layout laden: so existieren die Sensoren auch, wenn
+    # der Miner beim Start aus ist (dann "nicht verfügbar").
+    stored = await store.async_load()
+    if not isinstance(stored, list):
+        stored = []
+    stored = [
+        item
+        for item in stored
+        if isinstance(item, list)
+        and len(item) == 3
+        and all(isinstance(part, str) for part in item)
+    ]
+
+    synced = False
+
+    @callback
+    def _sync_from_miner() -> None:
+        """Beim ersten erfolgreichen Poll Layout abgleichen und speichern."""
+        nonlocal synced
+
+        if synced or not coordinator.data:
             return
+        synced = True
 
-        already_active = self._active_pool_nr() == idx
+        layout = _layout_from_data(coordinator.data)
+        _add_layout(layout)
 
-        result = await self.api.switch_pool(idx)
+        if layout != stored:
+            store.async_delay_save(lambda: layout, 1)
 
-        if result.get("success") and not already_active:
-            pool = self._pool_by_number(idx)
-            self._switch_baseline = _to_int(
-                pool.get("Accepted"), 0
-            ) if pool else 0
-            self._switch_target = idx
-            self._switch_started = time.monotonic()
-            self.async_write_ha_state()
-
-        await self.coordinator.async_request_refresh()
+    _add_layout(stored)
+    _sync_from_miner()
+    entry.async_on_unload(coordinator.async_add_listener(_sync_from_miner))
