@@ -37,9 +37,8 @@
 
 Fixed:
 
-* Corrected pool index mapping inpool choose (select) entity. 
-  (Note: After switching pools, the Nano3S take approximately 140-180 seconds to complete the switch)
-* When the miner is powered off or unreachable, the integration is no longer marked as faulty.
+* When switching pools, you will now see "Please wait → Switching pool" in the selection menu. The switch is complete when the display changes back to the previously selected "Pool X"!
+* When the miner is powered off or unreachable, the integration is no longer marked as faulty. (really fixed now)
   
 
 ### Version 1.2.1.0
