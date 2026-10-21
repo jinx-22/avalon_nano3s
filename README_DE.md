@@ -40,9 +40,8 @@
 ### Version 1.2.2.0
 
 Behoben:
-- Korrekte Zuordnung der Pool-Indizes in der Pool-Auswahl-Entity. 
-  (Hinweis: Nach Wechsel braucht der Nano3s ca. 140 -180 Sekunden)
-- Ist der Miner ausgeschaltet oder nicht erreichbar, wird die Integration nicht mehr als fehlerhaft markiert.
+* Beim Wechsel des Pools wird nun im Auswahlmenü „Bitte warten → Poolwechsel“ angezeigt. Der Wechsel ist abgeschlossen, sobald die Anzeige wieder zum zuvor ausgewählten „Pool X“ zurückwechselt!
+* Wenn der Miner ausgeschaltet oder nicht erreichbar ist, wird die Integration nicht mehr als fehlerhaft markiert. (Diesmal wirklich behoben!)
 
 ### Version 1.2.1.0
 
