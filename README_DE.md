@@ -37,11 +37,18 @@
 
 ---
 
+### Version 1.2.2.0
+
+Behoben:
+- Korrekte Zuordnung der Pool-Indizes in der Pool-Auswahl-Entity. 
+  (Hinweis: Nach Wechsel braucht der Nano3s ca. 140 -180 Sekunden)
+- Ist der Miner ausgeschaltet oder nicht erreichbar, wird die Integration nicht mehr als fehlerhaft markiert.
+
 ### Version 1.2.1.0
 
 Behoben:
 - Fehlerbehandlung der Avalon-Nano-3S-API überarbeitet.
-- Ist der Miner ausgeschaltet oder nicht erreichbar, wird die Integration nicht mehr als fehlerhaft markiert.
+- Ist der Miner ausgeschaltet oder nicht erreichbar, wird die Integration nicht mehr als fehlerhaft markiert. (funktioniert erst in 1.2.2.0)
 - Die normale Home-Assistant-Error-Meldung beim fehlgeschlagenen Datenabruf erscheint weiterhin und ist so gewollt.
 - Beim wieder eingeschalteten und erreichbaren Miner funktioniert die Aktualisierung automatisch wieder.
 
