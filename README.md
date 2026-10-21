@@ -37,8 +37,17 @@
 
 Fixed:
 
-* When switching pools, you will now see "Please wait → Switching pool" in the selection menu. The switch is complete when the display changes back to the previously selected "Pool X"!
-* When the miner is powered off or unreachable, the integration is no longer marked as faulty. (really fixed now)
+* The integration is now loaded normally when the miner is switched off or unreachable. The "setup error / retrying" state no longer appears. Only the entities of the affected miner become "unavailable" and recover automatically as soon as it is reachable again. With several Nano 3S, each miner is handled independently.
+* Sensors are remembered: if Home Assistant starts while the miner is off, all sensors already exist (as unavailable) instead of appearing only after the first successful update.
+* No repeated connection retries while the miner is offline, so a failed update is detected faster.
+* The LED light entity no longer fails if the miner has not delivered any data yet.
+
+Changed:
+
+* Pool selection: the active pool is now detected via the pool priority and is shown correctly right after switching.
+* While the miner is switching pools, the dropdown shows "Please wait -> Switching Pool" until the new pool has confirmed its first share (timeout after 5 minutes).
+* Added translations (DE/EN) for the pool-change state.
+* Home Assistant conformity: the config entry is passed to the data coordinator, and the stored sensor layout is removed together with the integration entry.
   
 
 ### Version 1.2.1.0
