@@ -33,6 +33,15 @@
 - Control Fan speed -> 15% (560rpm) - 100% (4660rpm). (V1.1.0.0)
 ---
 
+### Version 1.2.2.0
+
+Fixed:
+
+* Corrected pool index mapping inpool choose (select) entity. 
+  (Note: After switching pools, the Nano3S take approximately 140-180 seconds to complete the switch)
+* When the miner is powered off or unreachable, the integration is no longer marked as faulty.
+  
+
 ### Version 1.2.1.0
 
 Fixed:
