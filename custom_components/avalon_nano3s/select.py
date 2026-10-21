@@ -18,9 +18,13 @@ _LOGGER = logging.getLogger(__name__)
 
 # Pool-Wechsel: Der Miner hasht nach dem Umschalten noch ca. 2 Minuten mit
 # Arbeit des alten Pools weiter, der neue Pool bestätigt erst danach den
-# ersten Share. So lange gilt der Wechsel als "laufend" (Attribut switching).
-POOL_SWITCH_TIMEOUT = 300  # Sekunden, danach wird "switching" in jedem Fall beendet
+# ersten Share. So lange gilt der Wechsel als "laufend" und der Select zeigt
+# statt "Pool X" den Text "Poolwechsel" (bzw. "Switching pool").
+POOL_SWITCH_TIMEOUT = 300  # Sekunden, danach wird der Wechsel in jedem Fall beendet
 POOL_SWITCH_GRACE = 15     # Sekunden, in denen noch veraltete Daten ignoriert werden
+POOL_OPTIONS = ["Pool 1", "Pool 2", "Pool 3"]
+POOL_SWITCHING_DE = "Poolwechsel"
+POOL_SWITCHING_EN = "Switching pool"
 
 # =========================
 # Workmode Mapping
@@ -178,7 +182,7 @@ class AvalonPoolSelect(CoordinatorEntity, SelectEntity):
     """Pool switching via CGMiner API."""
 
     _attr_has_entity_name = True
-    _attr_options = ["Pool 1", "Pool 2", "Pool 3"]
+    _attr_options = POOL_OPTIONS
     _attr_translation_key = "pool"
 
     def __init__(self, coordinator, api, entry_id, device_info):
@@ -248,6 +252,9 @@ class AvalonPoolSelect(CoordinatorEntity, SelectEntity):
     @property
     def current_option(self) -> str:
         try:
+            if self._switch_target is not None:
+                return self._switching_label
+
             pool_nr = self._active_pool_nr()
             if pool_nr in (0, 1, 2):
                 return f"Pool {pool_nr + 1}"
@@ -257,8 +264,16 @@ class AvalonPoolSelect(CoordinatorEntity, SelectEntity):
             return "Pool 1"
 
     @property
-    def extra_state_attributes(self):
-        return {"switching": self._switch_target is not None}
+    def _switching_label(self) -> str:
+        language = getattr(getattr(self.hass, "config", None), "language", "") or ""
+        return POOL_SWITCHING_DE if language.lower().startswith("de") else POOL_SWITCHING_EN
+
+    @property
+    def options(self) -> list[str]:
+        """Während eines Wechsels gibt es zusätzlich den Eintrag "Poolwechsel"."""
+        if self._switch_target is not None:
+            return [*POOL_OPTIONS, self._switching_label]
+        return list(POOL_OPTIONS)
 
     def _refresh_switching(self) -> None:
         """Laufenden Wechsel beenden, sobald er abgeschlossen oder hinfällig ist."""
@@ -297,6 +312,7 @@ class AvalonPoolSelect(CoordinatorEntity, SelectEntity):
     async def async_select_option(self, option: str) -> None:
         mapping = {"Pool 1": 0, "Pool 2": 1, "Pool 3": 2}
 
+        # "Poolwechsel" ist nur eine Anzeige, kein auswählbarer Befehl
         idx = mapping.get(option)
         if idx is None:
             return
