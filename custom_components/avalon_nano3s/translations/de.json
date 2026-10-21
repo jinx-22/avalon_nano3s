@@ -311,7 +311,7 @@
     "select": {
       "workmode": { "name": "Arbeitsmodus" },
       "led_effect": { "name": "LED Effekt" },
-      "pool": { "name": "Pool ändern - ca. 140s warten!!!" }
+      "pool": { "name": "Pool ändern - ca. 140s warten!!!", "state": { "switching": "Bitte warten -> Poolwechsel" } }
     }
   }
 }
